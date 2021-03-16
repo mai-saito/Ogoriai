@@ -1,0 +1,68 @@
+@charset "UTF-8";
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+li {
+	list-style: none;
+}
+
+body {
+	padding: 2%;
+}
+
+/* Header */
+header {
+	display: flex;
+	justify-content: space-between;
+}
+
+header ul {
+	display: flex;
+	justify-content: space-between;
+}
+
+header ul li:first-of-type {
+	margin-right: 10px;
+}
+
+/* Main */
+main {
+	width: 100vw;
+	height: 100vh;
+	display: block;
+	position: relative;
+}
+
+/* Home */
+.home section {
+	width: fit-content;
+	position: absolute;
+	top: 40%;
+	left: 30%;
+}
+
+.home ul {
+	display: flex;
+	flex-direction: row-reverse;
+}
+
+.home ul li:first-of-type {
+	margin-left: 5px;
+}
+
+/* Register*/
+/* .register section {
+	width: fit-content;
+	position: absolute;
+	top: 20%;
+	left: 35%;
+} */
