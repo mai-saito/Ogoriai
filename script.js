@@ -1,52 +1,45 @@
-// Handle click events
-let cookieArray = [];
-function handleCookie(cookies) {
-	cookies.split('; ').forEach(function(cookiesArray) {
-		let cookie = cookiesArray.split('=');
-		cookieArray.push(cookie);
-	});
-};
-window.onload = handleCookie(document.cookie);
-console.log(cookieArray);
 
-// Create a form of group member
-cookies = [];
+// mypageから選択されたexpense_tableに移動する
 function handleClick(event) {
-	const memberInputs = document.querySelector('#member-inputs');
-	const input = document.createElement('input');
-	const hiddenInput = document.createElement('input');
-
-	if (event.target.name === 'add'){
-		cookieArray.forEach(function(cookie) {
-			if (event.target.value === cookie[0]) {
-				cookies.push(cookie[0]);
-				console.log(cookies)
-				// console.log(JSON.stringify(cookies));
-				document.cookie = 'user_id='+[cookies];
-				console.log(document.cookie);
-				input.setAttribute('value', decodeURIComponent(cookie[1]));
-				input.setAttribute('name', 'name');
-				input.style.display = 'block';
-				hiddenInput.setAttribute('type', 'hidden')
-				hiddenInput.setAttribute('value', cookie[0]);
-				hiddenInput.setAttribute('name', 'user_id');
-			}
-		});
-		memberInputs.appendChild(input);
-		memberInputs.appendChild(hiddenInput);
-	}
+	const selectedForm = event.target.parentElement.parentElement;
+	selectedForm.submit();
 }
 
-// function handleSubmit(event) {
-// 	// event.preventDefault();
-// 	$.ajax({
-// 		type: 'POST',
-// 		url: 'choose_member.php',
-// 		// success: function () {
-// 		// 	alert('Success');
-// 		// },
-// 		error: function (error) {
-// 			console.log(error);
-// 		}
-// 	});
-// }
+// expense_tableのモーダル操作
+const modalButtons = document.querySelectorAll('.expense-table #modal-button');
+const modals = document.querySelectorAll('.expense-table #setting-modal');
+const close = document.querySelectorAll('.expense-table .modal .close');
+
+// モーダルを開く
+modalButtons.forEach(function (modalButton) {
+	modals.forEach(function (modal) {
+		modalButton.onclick = function() {
+			if (modal.style.display === 'block') {
+				modal.style.display = 'none';
+			} else {
+				modal.style.display = 'block';
+			}
+		}
+	});
+});
+
+// モーダルを閉じる
+close.forEach (function (button) {
+	modals.forEach(function (modal) {
+		button.onclick = function () {
+			modal.style.display = 'none';
+		}
+	});
+});
+
+modals.forEach(function(modal) {
+	modal.onclick = function() {
+		if (modal.style.display === 'block') {
+			modal.style.display = 'none';
+		}
+	}
+});
+
+
+
+

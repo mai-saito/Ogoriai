@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>登録</title>
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru&family=Noto+Sans&family=Noto+Sans+JP&family=Roboto&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+	<div id="wrapper">
+		<header>
+			<h1><a href="../index.html">おごりあい</a></h1>
+			<nav>
+				<ul>
+					<li><a href="login.html" class="mr-3">ログイン</a></li>
+					<li><a href="register.html">登録</a></li>
+				</ul>
+			</nav>
+		</header>
+		<main class="register">
+			<section>
+				<!-- <h1>登録フォーム</h1> -->
+				<form action="../register.php" method="POST">
+					<table>
+						<tr class="form-group">
+							<th><label for="name">お名前：</label></th>
+							<td><input type="text" name="name" id="name" class="form-control"></td>
+						</tr>
+						<tr class="form-group">
+							<th><label for="email">メールアドレス：</label></th>
+							<td><input type="email" name="email" id="email" class="form-control"></td>
+						</tr>
+						<tr class="form-group">
+							<th><label for="password">パスワード：</label></th>
+							<td><input type="password" name="password" id="password" class="form-control"></td>
+						</tr>
+						<tr>
+							<th colspan="2" class="text-right"><input type="submit" value="登録する" class="btn btn-lg btn-primary mt-2"></th>
+						</tr>
+					</table>
+				</form>
+			</section>
+		</main>
+	</div>	
+</body>
+</html>

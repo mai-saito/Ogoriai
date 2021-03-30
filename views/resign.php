@@ -1,6 +1,9 @@
-<?php 
-session_start();
-session_regenerate_id(true);
+<?php
+	require_once '../models/function.php';
+	
+	// セッション開始
+	session_start();
+	check_session('user_id');	
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -9,23 +12,25 @@ session_regenerate_id(true);
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>退会</title>
-	<link rel="stylesheet" href="css/styles.css">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru&family=Noto+Sans&family=Noto+Sans+JP&family=Roboto&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-<?php if (isset($_SESSION['email'])): ?>
 	<header>
 		<h1>おごりあい</h1>
 		<nav>
 			<ul>
 				<li><a href="mypage.php">マイページ</a></li>
 				<li><a href="account.php">アカウント</a></li>
-				<li><a href="logout.php">ログアウト</a></li>
+				<li><a href="../logout.php">ログアウト</a></li>
 			</ul>
 		</nav>
 	</header>
 	<main class="resign">
 		<p><?php echo $_SESSION['name'] ?>さん、本当に退会されますか？</p>
-		<form action="resign_comp.php" method="POST">
+		<form action="../resign_comp.php" method="POST">
 			<table>
 				<tr>
 					<th><label for="password">パスワード：</label></th>
@@ -43,16 +48,5 @@ session_regenerate_id(true);
 			</table>
 		</form>
 	</main>
-<?php else : ?>
-		<p>
-			ログインしなおしてください。<br>
-			（自動的にログイン画面に切り替わります。）
-		</p>
-		<script>
-			setTimeout(function() {
-				window.location.href = 'login.html';
-			}, 2000);
-		</script>
-<?php endif; ?>
 </body>
 </html>
