@@ -193,31 +193,29 @@ header ul li a:hover {
 	border: 2px solid rgb(253, 232, 205);
 }
 
-.mypage #group-form {
-	height: fit-content;
-	border: 2px solid rgb(253, 232, 205);
-}
-
-/* Group List */
-.group-list .tab-group {
-	display: flex;
-}
-
-.group-list .tab-list {
+.mypage #group-list .tab-list {
 	display: flex;
 	justify-content: space-evenly;
 }
 
-.group-list .tab-list .tab {
+.mypage #group-list .tab-list .tab {
 	width: 100%;
+	padding: 5px 0;
+	color: rgb(67, 53, 32);
+	background-color: inherit;
 	border: 1px solid rgb(253, 232, 205);
 	border-top: none;
 	border-bottom: 2px solid rgb(253, 232, 205);
 	text-align: center;
 }
 
-.group-list .tab-list .tab {
+.mypage #group-list .tab-list .tab {
 	cursor: pointer;
+}
+
+/* Group List */
+.group-list .tab-group {
+	display: flex;
 }
 
 .group-list .tab-list input[name="tab"] {
@@ -298,6 +296,58 @@ header ul li a:hover {
 	width: 15%;
 }
 
+/*** Choose Member ***/
+.choose-member {
+	width: 90%;
+	margin: 0 auto;
+}
+
+.choose-member h1{
+	width: 70%;
+	font-size: 2rem;
+	margin-bottom: 10px;
+}
+
+.choose-member h1 span{
+	font-size: 2.5rem;
+	color: rgb(0, 145, 124);
+}
+
+.choose-member #search-form {
+	width: 70%;
+}
+
+
+.choose-member #member-table {
+	width: 65%;
+}
+
+.choose-member #member-table input {
+	border: none;
+	outline: none;
+}
+
+.choose-member #member-table {
+	border-collapse: collapse;
+	border: 1px solid rgb(253, 232, 205);
+}
+
+.choose-member #member-table tr {
+	border: 1px dotted rgb(253, 232, 205);
+}
+
+.choose-member #member-table td {
+	padding-left: 5px;
+}
+
+.choose-member #member-table td:last-of-type {
+	width: 10%;
+}
+
+.choose-member #member-table td .btn {
+	width: 100%;
+}
+
 /*** Expense Table ***/
 .expense-table {
 	width: 100%;
@@ -376,6 +426,14 @@ header ul li a:hover {
 	display: flex;
 }
 
+.expense-table .no-expense {
+	width: 90%;
+	margin: 0 auto;
+	padding-left: 5px;
+	border: 1px solid rgb(253, 232, 205);
+}
+
+/*** Modals ***/
 .expense-table #modal-button:hover {
 	cursor: pointer;
 }
@@ -391,7 +449,8 @@ header ul li a:hover {
 }
 
 .expense-table .modal-content {
-	width: 70%;
+	width: 50%;
+	height: 50%;
 	margin: 80px auto;
 	padding: 20px;
 	z-index: 2;
@@ -404,12 +463,6 @@ header ul li a:hover {
 	cursor: pointer;
 }
 
-/* .clearfix:after {
-	content: "";
-	display: block;
-	clear: both;
-} */
-
 .expense-table .modal-content>div {
 	display: flex;
 	justify-content: space-around;
@@ -418,4 +471,34 @@ header ul li a:hover {
 .expense-table .modal-content ul {
 	display: flex;
 	flex-direction: column;
+}
+
+.expense-table #setting-modal .modal-content div:first-of-type{
+	width: 80%;
+	margin: 0 auto;
+}
+
+.expense-table #setting-modal table {
+	width: 70%;
+	height: 70%;
+}
+
+.expense-table #setting-modal table th,
+.expense-table #setting-modal table td {
+	width: 50%;
+	padding-left: 5px;
+	text-align: left;
+}
+
+.expense-table #setting-modal table td {
+	border-left: dotted 1px rgb(253, 232, 205);
+}
+
+.expense-table #setting-modal ul {
+	width: 30%;
+}
+
+.expense-table #setting-modal ul li input,
+.expense-table #setting-modal ul li a {
+	width: 90%;
 }

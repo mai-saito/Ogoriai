@@ -8,8 +8,10 @@
 	check_session('email');
 
 	// DB接続情報
-	// $pdo = connect_db(DSN, LOCAL_ID, LOCAL_PASSWORD);
+	$pdo = connect_db(DSN, LOCAL_ID, LOCAL_PASSWORD);
 
+	// ユーザーの所属しているグループを取得する
+	$groups = get_group_member($pdo, $_SESSION['user_id']);
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -45,9 +47,14 @@
 				</ul>
 			</section>
 			<section>
-				<!-- <h1 class="mb-5"><span><//?php echo $_SESSION['name'] ?></span>さんのページ</h1> -->
 				<div>
 					<div id="group-list">
+						<!-- タブリスト -->
+						<div class="tab-list mb-5">
+<?php foreach ($groups as $group): ?>
+						<input type="button" id="<?php echo $group['group_id'] ?>" class="tab" value="<?php echo $group['group_name'] ?>" onclick="handleClick(event)">
+<?php endforeach; ?>
+						</div>
 <?php include VIEWS_PATH.'/group_list.php' ?>
 					</div>
 					<form action="../create_group.php" method="POST" id="group-form" class="p-3">

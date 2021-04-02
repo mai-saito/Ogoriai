@@ -16,7 +16,6 @@
 	} else {
 		$group_id = $_POST['group_id'];
 	}
-	var_dump($group_id);
 
 	// グループのgroup_nameを取得する
 	$group = get_group_name($pdo, $group_id);
@@ -36,7 +35,7 @@
 <body>
 	<div id="wrapper">
 		<header>
-			<h1>おごりあい</h1>
+			<h1><a href="../index.html">おごりあい</a></h1>
 			<nav>
 				<ul>
 					<li><a href="mypage.php">マイページ</a></li>
@@ -45,14 +44,14 @@
 				</ul>
 			</nav>
 		</header>
-		<main class="choose_member">
-			<p>『<?php echo $group['group_name'] ?>』のメンバーを選んでください。</p>
-			<form action="choose_member.php" method="POST">
-				<table>
+		<main class="choose-member">
+			<h1><span><?php echo $group['group_name'] ?></span> のメンバーを選んでください。</h1>
+			<form action="choose_member.php" method="POST" id="search-form">
+				<table class="mb-4">
 					<tr class="form-group">
 						<th><label for="user">名前もしくはメールアドレス：</label></th>
-						<td><input type="text" name="user" id="user" class="form-control"></td>
-						<td><button type="submit" name="selected_method" value="search" class="btn btn-primary ml-3">検索する</button></td>
+						<td><input type="text" name="user" id="user" class="form-control" size="50"></td>
+						<td><button type="submit" name="selected_method" value="search" class="btn btn-block btn-lg btn-primary ml-3">検索する</button></td>
 					</tr>
 				</table>
 			</form>
@@ -76,11 +75,11 @@
 		$result = $stmt -> fetchAll(PDO::FETCH_ASSOC);
 		if ($result):
 ?>
-			<table>
-				<tr>
+			<table id="member-table">
+				<!-- <tr>
 					<th>名前</th>
 					<th>メールアドレス</th>
-				</tr>
+				</tr> -->
 <?php 
 	// あいまい検索結果で合致したユーザーの一覧を表示する
 	foreach ($result as $user): 
@@ -89,8 +88,8 @@
 					<form action="../choose_member_comp.php" method="post">
 						<td><input type="text" name="name" value="<?php echo $user['name'] ?>"></td>
 						<td><input type="text" name="email" value="<?php echo $user['email'] ?>"></td>
-						<td><input type="hidden" name="user_id" value="<?php echo $user['user_id'] ?>"></td>
-						<td><input type="submit" name="add_member" value="追加"></td>
+						<input type="hidden" name="user_id" value="<?php echo $user['user_id'] ?>">
+						<td><input type="submit" name="add_member" value="追加" class="btn btn-primary"></td>
 					</form>
 				</tr>
 <?php endforeach; ?>

@@ -1,31 +1,21 @@
-
 //マイページから選択された支出一覧ページに移動する
 function handleSubmit(event) {
-	console.log(event.target)
 	// クリックされたグループのgroup_idをinput:hiddenで送信する
 	const selectedForm = event.target.parentElement;
 	selectedForm.submit();
 }
 
-//マイページから選択された支出一覧ページに移動する
+// クリックイベント処理（マイページタブ切り替え）
 function handleClick(event) {
-	event.preventDefault();
-	const groupId = event.target.id;
-	console.log(groupId);
+	let cookie = setCookie('group_id', event.target.id, '30');
+	window.location.reload();
+}
 
-	$.ajax({
-		type: 'POST',
-		url: 'group_list.php',
-		data: {'group_id':groupId},
-		success: function() {
-			console.log(groupId);
-		}
-	}).done(data => {
-    console.log(data);
-	}).fail(data => {
-		console.log('failed')
-    console.error(data);
-	});
+// Cookieを設定する
+function setCookie(key, value, time) {
+	let expiresAt = "max-age=" + time;
+	document.cookie = key + "=" + value + ";" + expiresAt + ";";
+	return document.cookie;
 }
 
 // マイページのグループタブ切り替え処理

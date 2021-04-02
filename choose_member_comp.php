@@ -40,7 +40,7 @@
 </head>
 <body>
 	<header>
-		<h1>おごりあい</h1>
+		<h1><a href="index.html">おごりあい</a></h1>
 		<nav>
 			<ul>
 				<li><a href="views/mypage.php">マイページ</a></li>
