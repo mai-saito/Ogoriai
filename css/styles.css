@@ -1,5 +1,7 @@
 @charset "UTF-8";
 
+/*** General ***/
+
 * {
 	margin: 0;
 	padding: 0;
@@ -11,7 +13,22 @@ html {
 }
 
 body {
+	width: 100vw;
+	height: 100vh;
 	font: 1.6rem 'Noto Sans JP', 'Kiwi Maru', serif;
+}
+
+#wrapper { 
+	max-width: 1000px;
+	width: calc(100% - 100px);
+	height: 100%;
+	margin: 0 auto;
+}
+
+main {
+	width: 100%;
+	height: 100%;
+	display: block;
 }
 
 a, a:hover {
@@ -33,12 +50,36 @@ li {
 	border: solid 1px  rgb(67, 53, 32);
 }
 
-/* Header */
+.btn-danger {
+	background-color: rgb(145, 0, 21);
+	border: solid 1px  rgb(145, 0, 21);
+}
+
+.btn-danger:hover {
+	background-color: rgb(67, 53, 32);
+	border: solid 1px  rgb(67, 53, 32);
+}
+
+.btn-secondary {
+	width: 15%;
+	color: rgb(0, 145, 124);
+	border: double 3px rgb(0, 145, 124);
+	background-color: inherit;
+}
+
+.btn-secondary:hover {
+	color: rgb(67, 53, 32);
+	border: double 3px rgb(67, 53, 32);
+	background-color: inherit;
+}
+
+/*** Header ***/
 header {
+	width: 100%;
 	display: flex;
 	justify-content: space-between;
 	margin-bottom: 20px;
-	padding: 2% 2% 0;
+	padding: 2% 0;
 }
 
 header h1 {
@@ -56,21 +97,16 @@ header ul li a {
 	color: rgb(67, 53, 32);
 }
 
-/* Main */
-main {
-	width: 100vw;
-	height: 100vh;
-	padding: 0 2%;
-	display: block;
-	position: relative;
+header ul li a:hover {
+	color: rgb(0, 145, 124);
+	border-bottom: double 3px rgb(0, 145, 124);
 }
 
-/* Home */
-.home {
-	width: 100vw;
-	height: 100vh;
-	display: grid;
-	place-items: center;
+/*** Home ***/
+.home section {
+	width: fit-content;
+	margin: 0 auto;
+	padding-top: 20%;
 }
 
 .home h1 {
@@ -92,10 +128,8 @@ main {
 	margin-left: 5px;
 }
 
-/* Login */
+/*** Login ***/
 .login {
-	width: 100%;
-	height: 100%;
 	display: flex;
 	font: 1.6rem 'Noto Sans JP', serif;
 	color: rgb(67, 53, 32);
@@ -110,10 +144,8 @@ main {
 	border: 1px solid rgb(223, 224, 223);
 }
 
-/* Register */
+/*** Register ***/
 .register {
-	width: 100%;
-	height: 100%;
 	display: flex;
 	font: 1.6rem 'Noto Sans JP', serif;
 	color: rgb(67, 53, 32);
@@ -128,24 +160,33 @@ main {
 	border: 1px solid rgb(223, 224, 223);
 }
 
-/* Mypage */
+/*** Mypage ***/
 .mypage {
-	width: 100%;
-	height: 100%;
-	display: grid;
-	place-items: center;
+	display: flex;
 	font: 1.6rem 'Noto Sans JP', serif;
 	color: rgb(67, 53, 32);
+}
+
+.mypage .mypage-list {
+	display: flex;
+	flex-direction: column;
+}
+
+.mypage .mypage-list li {
+	width: 90%;
+	margin-bottom: 10px;
 }
 
 .mypage h1 span {
 	font: 3rem 'Kiwi Maru', sans-serif;
 }
 
-.mypage section {
-	width: 100%;
-	display: flex;
-	justify-content: space-evenly;
+.mypage section:first-of-type {
+	width: 15%;
+}
+
+.mypage section:last-of-type {
+	width: calc(100% - 15%);
 }
 
 .mypage #group-list {
@@ -158,13 +199,131 @@ main {
 }
 
 /* Group List */
-.group-list form:first-of-type span:hover {
+.group-list .tab-group {
+	display: flex;
+}
+
+.group-list .tab-list {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.group-list .tab-list .tab {
+	width: 100%;
+	border: 1px solid rgb(253, 232, 205);
+	border-top: none;
+	border-bottom: 2px solid rgb(253, 232, 205);
+	text-align: center;
+}
+
+.group-list .tab-list .tab {
 	cursor: pointer;
 }
 
-/* Expense Table */
+.group-list .tab-list input[name="tab"] {
+  display: none;
+}
+
+.group-list .panel-group {
+	display: flex;
+}
+
+.group-list .left-container {
+	width: 25%;
+}
+
+.group-list .left-container>div {
+	width: 80%;
+	margin: 0 auto;
+}
+
+.group-list .left-container>div p {
+	text-align: right;
+}
+
+.group-list .left-container>ul {
+	width: 80%;
+	margin: 0 auto;
+}
+
+.group-list .left-container>ul li {
+	text-align: right;
+}
+
+.group-list .right-container {
+	width: 75%;
+}
+
+.group-list .right-container .panel-menu {
+	width: 90%;
+	margin: 0 auto 10px;
+	display: flex;
+}
+
+.group-list .panel-menu li{
+	margin-right: 10px;
+}
+
+.group-list .right-container form {
+	width: 90%;
+	margin: 0 auto 10px;
+	display: flex;
+}
+
+.group-list .right-container table {
+	width: 90%;
+	margin: 0 auto;
+	border: solid 1px rgb(223, 224, 223);
+	border-collapse: collapse;
+}
+
+.group-list .right-container table tr,
+.group-list .right-container table th,
+.group-list .right-container table td {
+	border: dotted 1px rgb(223, 224, 223);
+	border-collapse: collapse;
+}
+
+.group-list .right-container table th,
+.group-list .right-container table td {
+	width: 25%;
+	padding: 0 5px;
+}
+
+.group-list .right-container table .amount {
+	width: 15%;
+}
+
+.group-list .right-container table .item {
+	width: 15%;
+}
+
+/*** Expense Table ***/
 .expense-table {
+	width: 100%;
 	display: block;
+}
+
+.expense-table section:first-of-type {
+	width: 90%;
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-between;
+}
+
+.expense-table section:first-of-type span {
+	color: rgb(0, 145, 124);
+	font-size: 2.7rem;
+	font-weight: bold;
+}
+
+.expense-table table {
+	width: 90%;
+	margin: 0 auto;
+}
+
+.expense-table table:first-of-type {
+	table-layout: fixed;
 }
 
 .expense-table input {
@@ -172,9 +331,45 @@ main {
 	outline: none;
 }
 
-.expense-table table, .expense-table　tr, .expense-table　th,　.expense-table td {
+.expense-table table:first-of-type {
 	border-collapse: collapse;
-	border: 1px solid lightgray;
+	border: 1px solid rgb(253, 232, 205);
+}
+
+.expense-table table:first-of-type tr {
+	border: dotted 1px rgb(253, 232, 205);
+	border-collapse: collapse;
+}
+
+.expense-table .bigger-input {
+	width: 25%;
+	padding-left: 5px;
+}
+
+.expense-table .smaller-input {
+	width: 20%;
+	padding-left: 5px;
+}
+
+.expense-table select {
+	width: 80%;
+	padding-left: 5px;
+	border: none;
+}
+
+.expense-table .btn-expense {
+	width: 90%;
+	height: 80%;
+	text-align: center;
+}
+
+.expense-table table:last-of-type {
+	text-align: right;
+}
+
+.expense-table table:last-of-type tr td{
+	width: 8%;
+	padding-right: 5px;
 }
 
 .expense-table ul {

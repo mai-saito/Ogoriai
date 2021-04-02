@@ -74,6 +74,16 @@
 		return $stmt -> fetchAll(PDO::FETCH_ASSOC);
 	}
 
+	// グループの最新5件の支出情報を表示する
+	function get_first_5_expense_list($pdo, $group_id) {
+		$stmt = null;
+		$sql = 'SELECT e.item, e.amount, u.name, u.user_id, e.date, g.group_name, g.group_id, e.expense_id FROM expenses e LEFT OUTER JOIN users u ON u.user_id = e.user_id INNER JOIN groups g ON g.group_id = e.group_id WHERE e.group_id = :group_id ORDER BY expense_id DESC LIMIT 5';
+		$stmt = $pdo -> prepare($sql);
+		$stmt -> bindParam('group_id', $group_id);
+		$stmt -> execute();
+		return $stmt -> fetchAll(PDO::FETCH_ASSOC);
+	}
+
 	// グループ全体の合計金額を出す
 	function get_group_total($pdo, $group_id) {
 		$stmt = null;

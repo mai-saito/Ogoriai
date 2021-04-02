@@ -15,9 +15,12 @@
 	if (isset($_POST['group_id'])) {
 		$group_id = $_POST['group_id']; 
 	} else {
-		$group_id = $_SESSION['updated_group_id'];
+		if (isset($_SESSION['updated_group_id'])){
+			$group_id = $_SESSION['updated_group_id'];
+		}
 	}
 	unset($_SESSION['updated_group_id']);
+	$group_id = 1;
 
 	// セッションにgroup_idを設定する
 	$group = get_group_name($pdo, $group_id);
@@ -36,12 +39,13 @@
 	<link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
+	<div id="wrapper">
 	<header>
-		<h1>おごりあい</h1>
+		<h1><a href="../index.html">おごりあい</a></h1>
 		<nav>
 			<ul>
-				<li><a href="mypage.php">マイページ</a></li>
-				<li><a href="account.php">アカウント</a></li>
+				<li><a href="mypage.php" class="mr-3">マイページ</a></li>
+				<li><a href="account.php" class="mr-3">アカウント</a></li>
 				<li><a href="../logout.php">ログアウト</a></li>
 			</ul>
 		</nav>
@@ -71,74 +75,76 @@
 	// 一覧結果を使ってテーブルを作成する
 	if ($result):
 ?>
-		<h1>『<?php echo $group['group_name'] ?>』支出一覧</h1>
-		<ul>
-			<li><p id="modal-button">グループ管理</p></li>
-			<li><a href="settle_up.php">精算する</a></li>
-			<li><a href="mypage.php">マイページに戻る</a></li>
-		</ul>
-		<!-- 支出テーブル一覧 -->
-		<table>
-			<tr><th>アイテム</th><th>金額</th><th>メンバー</th><th>日付</th></tr>
+		<section>
+			<h1><span><?php echo $group['group_name'] ?></span> 支出一覧</h1>
+			<ul>
+				<li><p id="modal-button" class="btn btn-lg btn-primary mr-3">グループ管理</p></li>
+				<li><a href="settle_up.php" class="btn btn-lg btn-primary mr-3">精算する</a></li>
+				<li><a href="mypage.php" class="btn btn-lg btn-primary">マイページに戻る</a></li>
+			</ul>
+		</section>
+			<!-- 支出テーブル一覧 -->
+		<table class="mb-3">
+			<!-- <tr><th class="bigger-input">アイテム</th><th class="bigger-input">金額</th><th class="smaller-input">メンバー</th><th class="smaller-input">日付</th></tr> -->
 <?php foreach ($result as $value): ?>
-			<tr>
-				<form action="../edit_expense.php" method="POST">
-					<td><input type="text" name="item" value="<?php echo $value['item'] ?>"></td>
-					<td><input type="text" name="amount" value="<?php echo $value['amount'] ?>"></td>
-					<td>
+				<tr>
+					<form action="../edit_expense.php" method="POST" class="expense-form">
+						<td class="bigger-input"><input type="text" name="item" value="<?php echo $value['item'] ?>"></td>
+						<td class="smaller-input"><input type="text" name="amount" value="<?php echo $value['amount'] ?>"></td>
+						<td class="smaller-input">
 						<select name="name">
 <?php $name = (is_null($value['name'])) ? '退会済みユーザー' : $value['name']; ?>
-							<option value="<?php echo $name ?>"><?php echo $name ?></option>
+								<option value="<?php echo $name ?>"><?php echo $name ?></option>
 <?php 
 	foreach ($members as $member):
 		if ($value['user_id'] !== $member['user_id']):
 ?>
-							<option value="<?php echo $member['name'] ?>"><?php echo $member['name'] ?></option>
+								<option value="<?php echo $member['name'] ?>"><?php echo $member['name'] ?></option>
 <?php endif; ?>
 <?php endforeach; ?>
-						</select>
-					</td>
-					<td><input type="text" name="date" value="<?php echo $value['date'] ?>" readonly></td>
-					<td><input type="hidden" name="group_id" value="<?php echo $value['group_id'] ?>"></td>
-					<td><input type="hidden" name="expense_id" value="<?php echo $value['expense_id'] ?>"></td>
-					<td><input type="submit" name="update" value="変更"></td>
-					<td><input type="submit" name="delete" value="削除"></td>
-				</form>
-			</tr>
+							</select>
+						</td>
+						<td class="smaller-input"><input type="text" name="date" value="<?php echo $value['date'] ?>" readonly></td>
+						<input type="hidden" name="group_id" value="<?php echo $value['group_id'] ?>">
+						<input type="hidden" name="expense_id" value="<?php echo $value['expense_id'] ?>">
+						<td><input type="submit" name="update" value="変更" class="btn btn-primary btn-expense"></td>
+						<td><input type="submit" name="delete" value="削除" class="btn btn-danger btn-expense"></td>
+					</form>
+				</tr>
 <?php endforeach; ?>
-			</table>
-			<!-- 合計金額テーブル -->
-			<table>
-				<tr>
-					<th>グループ合計：</th>
-					<td><?php echo $group_total['group_total'] ?>円</td>
-				</tr>
-				<tr>
-					<th>あなたの支払い合計：</th>
-					<td><?php echo $subtotal ?>円</td>
-				</tr>
-			</table>
+				</table>
+				<!-- 合計金額テーブル -->
+				<table>
+					<tr>
+						<th>グループ合計：</th>
+						<td><?php echo $group_total['group_total'] ?>円</td>
+					</tr>
+					<tr>
+						<th>あなたの支払い合計：</th>
+						<td><?php echo $subtotal ?>円</td>
+					</tr>
+				</table>
 <?php else: ?>
-	<h1>『<?php echo $group['group_name'] ?>』支出一覧</h1>
-	<ul>
-		<li><p id="modal-button">グループの詳細</p></li>
-		<li><a href="mypage.php">マイページに戻る</a></li>
-	</ul>
-	<p>支出データが存在しません。</p>
+		<h1>『<?php echo $group['group_name'] ?>』支出一覧</h1>
+		<ul>
+			<li><p id="modal-button">グループの詳細</p></li>
+			<li><a href="mypage.php">マイページに戻る</a></li>
+		</ul>
+		<p>支出データが存在しません。</p>
 <?php endif; ?>
-		<!-- グループ詳細モーダル -->
-		<div class="modal" id="setting-modal">
-			<div class="modal-content">
-				<span class="close clearfix" id="close-setting">&times;</span>
-				<div>
-					<table>
-						<tr>
-							<th>グループ名：</th>
-							<td><?php echo $group['group_name'] ?></td>
-						</tr>
-						<tr>
-							<th>メンバー：</th>
-							<td>
+			<!-- グループ詳細モーダル -->
+			<div class="modal" id="setting-modal">
+				<div class="modal-content">
+					<span class="close clearfix" id="close-setting">&times;</span>
+					<div>
+						<table>
+							<tr>
+								<th>グループ名：</th>
+								<td><?php echo $group['group_name'] ?></td>
+							</tr>
+							<tr>
+								<th>メンバー：</th>
+								<td>
 <?php 
 	if ($members){
 		foreach ($members as $member) {
@@ -148,21 +154,22 @@
 		echo 'メンバーがいません。';
 	}
 ?>
-							</td>
-						</tr>
-						<tr>
-							<th>わりかん方法：</th>
-							<td>等分</td>
-						</tr>
-					</table>
-					<ul>
-						<li><a href="choose_member.php">メンバーの追加</a></li>
-						<li><a href="delete_group.php">グループの削除</a></li>
-					</ul>
+								</td>
+							</tr>
+							<tr>
+								<th>わりかん方法：</th>
+								<td>等分</td>
+							</tr>
+						</table>
+						<ul>
+							<li><a href="choose_member.php">メンバーの追加</a></li>
+							<li><a href="delete_group.php">グループの削除</a></li>
+						</ul>
+					</div>
 				</div>
 			</div>
-		</div>
-	</main>
+		</main>
+	</div>
 	<script src="../script.js"></script>
 </body>
 </html>
