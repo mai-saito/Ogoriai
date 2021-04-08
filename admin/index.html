@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>おごりあい</title>
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru&family=Noto+Sans&family=Noto+Sans+JP&family=Roboto&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+	<div id="wrapper">
+		<main class="home">
+			<section>
+				<h1><img src="../images/logo-lg.png" alt="メイン画像"></h1>
+				<div>
+					<h1 class="mb-4">管理画面にログインする</h1>
+					<form action="admin_login.php" method="POST">
+						<table>
+							<tr class="form-group">
+								<th><label for="email">メールアドレス：</label></th>
+								<td><input type="email" name="email" id="email" value="admin@gmail.com" class="form-control mb-3" size="40"></td>
+							</tr>
+							<tr class="form-group">
+								<th><label for="password">パスワード：</label></th>
+								<td><input type="password" name="password" id="password" value="Admin123" class="form-control mb-3"></td>
+							</tr>
+							<tr>
+								<th colspan="2" class="text-right"><input type="submit" name="admin_login" value="ログイン" class="btn btn-lg btn-primary mt-2" id="login-button"></th>
+							</tr>
+						</table>
+					</form>
+				</div>
+			</section>
+		</main>
+	</div>
+</body>
+</html>

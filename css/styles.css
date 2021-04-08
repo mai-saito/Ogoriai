@@ -1,7 +1,6 @@
 @charset "UTF-8";
 
 /*** General ***/
-
 * {
 	margin: 0;
 	padding: 0;
@@ -15,11 +14,12 @@ html {
 body {
 	width: 100vw;
 	height: 100vh;
+	position: relative;
 	font: 1.6rem 'Noto Sans JP', 'Kiwi Maru', serif;
 }
 
 #wrapper { 
-	max-width: 1000px;
+	max-width: 1100px;
 	width: calc(100% - 100px);
 	height: 100%;
 	margin: 0 auto;
@@ -40,6 +40,7 @@ li {
 	list-style: none;
 }
 
+/*** Buttons & Tabs & Avatars ***/
 .btn-primary {
 	background-color: rgb(0, 145, 124);
 	border: solid 1px  rgb(0, 145, 124);
@@ -47,11 +48,24 @@ li {
 
 .btn-primary:hover {
 	background-color: rgb(67, 53, 32);
-	border: solid 1px  rgb(67, 53, 32);
+	border: solid 1px rgb(67, 53, 32);
+}
+
+.btn-disabled{
+	color: rgb(200, 201, 200);
+	background-color: rgba(223, 224, 223, 0.7);
+	border: solid 1px rgb(223, 224, 223);
+}
+
+.btn-disabled:hover{
+	color: rgb(200, 201, 200);
+	background-color: rgba(223, 224, 223, 0.7);
+	border: solid 1px rgb(223, 224, 223);
+	pointer-events: none;
 }
 
 .btn-danger {
-	background-color: rgb(145, 0, 21);
+	background-color: rgb(143, 0, 21);
 	border: solid 1px  rgb(145, 0, 21);
 }
 
@@ -63,7 +77,7 @@ li {
 .btn-secondary {
 	width: 15%;
 	color: rgb(0, 145, 124);
-	border: double 3px rgb(0, 145, 124);
+	border: double 3px rgb(0, 143, 121);
 	background-color: inherit;
 }
 
@@ -73,18 +87,85 @@ li {
 	background-color: inherit;
 }
 
+.selected-tab, 
+.selected-tab:hover {
+	color: rgb(255, 255, 255);
+	background-color: rgb(0, 145, 124);
+}
+
+.selected-group-tab, 
+.selected-group-tab:hover {
+	width: 100%;
+	padding: 5px 0;
+	color: rgb(67, 53, 32);
+	background-color: inherit;
+	border-style: none;
+	text-align: center;
+	border-width: 1px;
+	border-color: rgb(223, 224, 223);
+}
+
+.tab-list {
+	width: 15%;
+	display: flex;
+	flex-direction: column;
+}
+
+.tab-list li {
+	width: 90%;
+	margin-bottom: 15px;
+}
+
+.tab-content {
+	width: calc(100% - 15%);
+	height: fit-content;
+}
+
+.tab-panel {
+	width: 100%;
+	display: none;
+	border: 2px solid rgb(223, 224, 223);
+}
+
+.tab-list .is-active {
+	color: rgb(255, 255, 255);
+	background-color: rgb(0, 145, 124);
+}
+
+.tab-content .is-active {
+	display: block;
+  animation: fade 0.5s ease;
+}
+
+@keyframes fade {
+	from {
+			opacity: 0;
+	}
+	to {
+			opacity: 1;
+	}
+}
+
+.avatar {
+	width: 50px;
+	height: 50px;
+	border: 2px solid rgba(0, 145, 124, 0.5);
+}
+
 /*** Header ***/
 header {
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
-	margin-bottom: 20px;
 	padding: 2% 0;
 }
 
-header h1 {
-	font: bold 3rem 'Kiwi Maru', sans-serif;
-	color: rgb(0, 145, 124);
+header h1 img {
+	vertical-align: top;
+}
+
+header h1 img:hover {
+	width: 110%;
 }
 
 header ul {
@@ -93,20 +174,87 @@ header ul {
 	align-items: center;
 }
 
+header ul li:first-of-type {
+	text-align: center;
+}
+
 header ul li a {
 	color: rgb(67, 53, 32);
 }
 
 header ul li a:hover {
 	color: rgb(0, 145, 124);
-	border-bottom: double 3px rgb(0, 145, 124);
+	border-bottom: 3px dotted rgb(253, 232, 205);;
+}
+
+header #notice {
+	width: 55%;
+}
+
+/*** Footer ***/
+footer {
+	width: 80%;
+	margin: 0 auto;
+	padding: 5px 5px 0;
+	display: flex;
+	position: absolute;
+  bottom: 0;
+	left: 10%;
+	justify-content: space-between;
+	border-top: 2px dotted rgb(253, 232, 205);
+}
+
+footer div:first-of-type {
+	width: 55%;
+	margin: auto 0;
+	text-align: right;
+	color: rgb(253, 232, 205);
+}
+
+footer div:nth-of-type(2) {
+	width: 45%;
+	display: flex;
+	justify-content: flex-end;
+}
+
+footer div img {
+	width: 50%;
+	vertical-align: top;
+}
+
+.btn-contact {
+	color: rgb(67, 53, 32);
+	border: double 3px rgb(253, 232, 205);
+	background-color: inherit;
+}
+
+.btn-contact:hover {
+	color: rgb(67, 53, 32);
+	border: double 3px rgb(253, 232, 205);
+	background-color: rgba(253, 232, 205, 0.5);
 }
 
 /*** Home ***/
 .home section {
-	width: fit-content;
+	width: 80%;
 	margin: 0 auto;
+	display: flex;
 	padding-top: 20%;
+	color: rgb(67, 53, 32);
+}
+
+.home section h1 {
+	width: 40%;
+}
+
+.home section img {
+	width: 80%;
+	display: block;
+	margin: auto auto;
+}
+
+.home section div {
+	width: 60%;
 }
 
 .home h1 {
@@ -119,17 +267,29 @@ header ul li a:hover {
 	color: rgb(67, 53, 32);
 }
 
+.home section p span {
+	color: rgb(0, 145, 124);
+	font-weight: 700;
+}
+
 .home ul {
 	display: flex;
 	flex-direction: row-reverse;
+	margin-left: 5px;
 }
 
-.home ul li:first-of-type {
-	margin-left: 5px;
+.home ul li {
+	width: 50%;
+}
+
+.home ul li a {
+	width: 90%;
 }
 
 /*** Login ***/
 .login {
+	width: 90%;
+	margin: 0 auto;
 	display: flex;
 	font: 1.6rem 'Noto Sans JP', serif;
 	color: rgb(67, 53, 32);
@@ -146,6 +306,8 @@ header ul li a:hover {
 
 /*** Register ***/
 .register {
+	width: 90%;
+	margin: 0 auto;
 	display: flex;
 	font: 1.6rem 'Noto Sans JP', serif;
 	color: rgb(67, 53, 32);
@@ -160,146 +322,198 @@ header ul li a:hover {
 	border: 1px solid rgb(223, 224, 223);
 }
 
+/*** Register-comp ***/
+.register {
+	width: 90%;
+	margin: 0 auto;
+	display: block;
+	font: 1.6rem 'Noto Sans JP', serif;
+	color: rgb(67, 53, 32);
+}
+
+
 /*** Mypage ***/
 .mypage {
+	width: 90%;
+	margin: 0 auto;
 	display: flex;
 	font: 1.6rem 'Noto Sans JP', serif;
 	color: rgb(67, 53, 32);
 }
 
-.mypage .mypage-list {
-	display: flex;
-	flex-direction: column;
+.mypage .tab-panel p span {
+	font-size: 1.8rem;
+	color: rgb(0, 145, 124);
 }
 
-.mypage .mypage-list li {
-	width: 90%;
-	margin-bottom: 10px;
+.mypage .tab img {
+	width: 50px;
+	height: 50px;
 }
 
-.mypage h1 span {
-	font: 3rem 'Kiwi Maru', sans-serif;
+.mypage .positive{
+	color: rgb(0, 145, 124);
+}
+.mypage .negative{
+	color: rgb(145, 0, 21) !important;
 }
 
-.mypage section:first-of-type {
-	width: 15%;
-}
-
-.mypage section:last-of-type {
-	width: calc(100% - 15%);
-}
-
-.mypage #group-list {
-	border: 2px solid rgb(253, 232, 205);
-}
-
-.mypage #group-list .tab-list {
+.mypage .group-list-tab {
 	display: flex;
 	justify-content: space-evenly;
 }
 
-.mypage #group-list .tab-list .tab {
+.mypage .group-list-tab .tab {
 	width: 100%;
 	padding: 5px 0;
-	color: rgb(67, 53, 32);
-	background-color: inherit;
-	border: 1px solid rgb(253, 232, 205);
-	border-top: none;
-	border-bottom: 2px solid rgb(253, 232, 205);
+	color: rgb(200, 201, 200);
+	background-color: rgba(223, 224, 223, 0.7);
+	border: 1px solid rgb(223, 224, 223);
 	text-align: center;
 }
 
-.mypage #group-list .tab-list .tab {
+.mypage .group-list-tab .is-active {
+	font-size: 1.8rem;
+	color: rgb(0, 145, 124);
+	background-color: inherit;
+	border-bottom: none;
+}
+
+.mypage .group-list-tab .is-active img {
+	border: 2px solid rgba(0, 145, 124, 0.5);
+}
+
+.mypage .group-list-tab .tab:hover {
 	cursor: pointer;
 }
 
-/* Group List */
-.group-list .tab-group {
-	display: flex;
+.group-tab-panel {
+	width: 100%;
+	display: none;
+	border: 1px solid rgb(223, 224, 223);
+	border-top: none;
+	border-bottom: none;
 }
 
-.group-list .tab-list input[name="tab"] {
+.group-tab-panel .is-active {
+	display: block;
+	animation: fade 0.5s ease;
+}
+
+.mypage .tab-group {
+	display: flex;
+	color: rgb(67, 53, 32);
+}
+
+.mypage .tab-list input[name="tab"] {
   display: none;
 }
 
-.group-list .panel-group {
+.mypage .container {
 	display: flex;
+	flex-direction: row;
 }
 
-.group-list .left-container {
+.mypage .left-container {
 	width: 25%;
 }
 
-.group-list .left-container>div {
+.mypage .left-container>div {
 	width: 80%;
 	margin: 0 auto;
 }
 
-.group-list .left-container>div p {
+.mypage .left-container>div p {
 	text-align: right;
 }
 
-.group-list .left-container>ul {
+.mypage .left-container>ul {
 	width: 80%;
 	margin: 0 auto;
 }
 
-.group-list .left-container>ul li {
+.mypage .left-container>ul li {
 	text-align: right;
 }
 
-.group-list .right-container {
+.mypage .right-container {
 	width: 75%;
 }
 
-.group-list .right-container .panel-menu {
+.mypage .right-container .panel-menu {
 	width: 90%;
 	margin: 0 auto 10px;
 	display: flex;
 }
 
-.group-list .panel-menu li{
+.mypage .panel-menu li{
 	margin-right: 10px;
 }
 
-.group-list .right-container form {
+.mypage .right-container form {
 	width: 90%;
 	margin: 0 auto 10px;
 	display: flex;
 }
 
-.group-list .right-container table {
+.mypage .right-container table {
 	width: 90%;
 	margin: 0 auto;
 	border: solid 1px rgb(223, 224, 223);
 	border-collapse: collapse;
 }
 
-.group-list .right-container table tr,
-.group-list .right-container table th,
-.group-list .right-container table td {
+.mypage .right-container table tr,
+.mypage .right-container table th,
+.mypage .right-container table td {
 	border: dotted 1px rgb(223, 224, 223);
 	border-collapse: collapse;
 }
 
-.group-list .right-container table th,
-.group-list .right-container table td {
+.mypage .right-container table th,
+.mypage .right-container table td {
 	width: 25%;
 	padding: 0 5px;
 }
 
-.group-list .right-container table .amount {
+.mypage .right-container table .amount {
 	width: 15%;
 }
 
-.group-list .right-container table .item {
+.mypage .right-container table .item {
 	width: 15%;
+}
+
+
+.mypage .group-form table {
+	width: 70%
+}
+
+/* .mypage .group-form table td:first-of-type {
+	width: 50%
+} */
+
+.mypage .after-register {
+	width: 100%;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: row;
+}
+
+.mypage .after-register>div {
+	width: calc(100% - 15%);
+	height: fit-content;
+}
+
+.is-shown {
+	display: block !important;
 }
 
 /*** Choose Member ***/
 .choose-member {
 	width: 90%;
 	margin: 0 auto;
+	color: rgb(67, 53, 32);
 }
 
 .choose-member h1{
@@ -313,45 +527,97 @@ header ul li a:hover {
 	color: rgb(0, 145, 124);
 }
 
+.choose-member p span{
+	font-size: 2rem;
+	color: rgb(0, 145, 124);
+}
+
 .choose-member #search-form {
 	width: 70%;
 }
 
-
-.choose-member #member-table {
+.choose-member .member-table {
 	width: 65%;
+	border-collapse: collapse;
+	border: 1px solid rgb(223, 224, 223);
 }
 
-.choose-member #member-table input {
+.choose-member .member-table input {
+	width: 100%;
 	border: none;
 	outline: none;
 }
 
-.choose-member #member-table {
-	border-collapse: collapse;
-	border: 1px solid rgb(253, 232, 205);
+.choose-member .member-table tr {
+	width: 100%;
+	border: 1px dotted rgb(223, 224, 223);
+
 }
 
-.choose-member #member-table tr {
-	border: 1px dotted rgb(253, 232, 205);
-}
-
-.choose-member #member-table td {
+.choose-member .member-table td {
+	width: 30%;
 	padding-left: 5px;
 }
 
-.choose-member #member-table td:last-of-type {
-	width: 10%;
+.choose-member .member-table td:nth-of-type(2) {
+	width: 50%;
 }
 
-.choose-member #member-table td .btn {
+.choose-member .member-table td:last-of-type {
+	width: 20%;
+}
+
+.choose-member .member-table td .btn {
 	width: 100%;
+}
+
+.choose-member ul {
+	display: flex;
+}
+
+/*** Remove Member ***/
+.remove-member {
+	width: 90%;
+	margin: 0 auto;
+}
+
+.remove-member p span{
+	font-size: 2rem;
+	color: rgb(0, 145, 124);
+}
+
+.remove-member table {
+	width: 65%;
+}
+
+.remove-member table tr td:last-of-type {
+	display: flex;
+}
+
+/*** Delete Group ***/
+.delete-group {
+	width: 90%;
+	margin: 0 auto;
+}
+
+.delete-group span {
+	font-size: 2rem;
+	color: rgb(0, 145, 124);
+}
+
+.delete-group table {
+	width: 70%
+}
+
+.delete-group table td a {
+	width: 90%;
 }
 
 /*** Expense Table ***/
 .expense-table {
 	width: 100%;
 	display: block;
+	color: rgb(67, 53, 32);
 }
 
 .expense-table section:first-of-type {
@@ -383,11 +649,11 @@ header ul li a:hover {
 
 .expense-table table:first-of-type {
 	border-collapse: collapse;
-	border: 1px solid rgb(253, 232, 205);
+	border: 1px solid rgb(223, 224, 223);
 }
 
 .expense-table table:first-of-type tr {
-	border: dotted 1px rgb(253, 232, 205);
+	border: dotted 1px rgb(223, 224, 223);
 	border-collapse: collapse;
 }
 
@@ -430,7 +696,7 @@ header ul li a:hover {
 	width: 90%;
 	margin: 0 auto;
 	padding-left: 5px;
-	border: 1px solid rgb(253, 232, 205);
+	border: 1px solid rgb(223, 224, 223);
 }
 
 /*** Modals ***/
@@ -449,8 +715,8 @@ header ul li a:hover {
 }
 
 .expense-table .modal-content {
-	width: 50%;
-	height: 50%;
+	width: 65%;
+	height: fit-content;
 	margin: 80px auto;
 	padding: 20px;
 	z-index: 2;
@@ -491,7 +757,7 @@ header ul li a:hover {
 }
 
 .expense-table #setting-modal table td {
-	border-left: dotted 1px rgb(253, 232, 205);
+	border-left: dotted 1px rgb(223, 224, 223);
 }
 
 .expense-table #setting-modal ul {
@@ -502,3 +768,361 @@ header ul li a:hover {
 .expense-table #setting-modal ul li a {
 	width: 90%;
 }
+
+/*** Settle Up ***/
+.settle-up {
+	width: 90%;
+	margin: 0 auto;
+	color: rgb(67, 53, 32);
+}
+
+.settle-up h1 span{
+	font-size: 2.5rem;
+	color: rgb(0, 145, 124);
+}
+
+.settle-up section:first-of-type {
+	width: 65%;
+	display: flex;
+	justify-content: space-between;
+}
+
+.settle-up section:nth-of-type(2) {
+	width: 65%;
+}
+
+.settle-up #member-table {
+	width: 100%;
+	table-layout: fixed;
+	border: 1px solid rgb(223, 224, 223);
+}
+
+.settle-up #member-table tr,
+.settle-up #member-table th,
+.settle-up #member-table td {
+	padding-left: 5px;
+	border: 1px dotted rgb(223, 224, 223);
+}
+
+
+.settle-up #member-table tr:first-of-type {
+	border-bottom: 1px solid rgb(223, 224, 223);
+}
+
+.settle-up #confirmation-section {
+	padding: 5px;
+	display: none;
+	border: 1px solid rgb(223, 224, 223);
+}
+
+
+.settle-up #confirmation-section div:first-of-type {
+	margin-left: 10px;
+}
+
+.settle-up #confirmation-section div:first-of-type p:first-of-type{
+	width: fit-content;
+	border-bottom: 3px double rgba(145, 0, 21, 0.5);
+}
+
+.settle-up #settle-up-form table .btn{
+	width: 20%;
+}
+
+.settle-up .settle-up-btn {
+  position: relative;               
+}
+.settle-up:hover .balloon {
+  display: inline;                
+}
+.balloon {
+  position: absolute;                
+  display: none;                        
+  padding: 2px;                         
+  background-color: rgba(253, 232, 205, 0.8);      
+  width: 100%;                         
+  right : -80%;   
+	left: 110%;
+	top: 0%;                       
+  font-size: 80%;                      
+}
+.balloon:after{
+  border-right: 12px solid rgba(253, 232, 205, 0.8);  
+  border-top: 10px solid transparent;     
+  border-bottom: 10px solid transparent;  
+  left: -12px;                            
+  top: 5%;                               
+  content: "";                      
+  position: absolute;               
+}
+
+/*** Account ***/
+.account {
+	width: 90%;
+	margin: 0 auto;
+	font: 1.6rem 'Noto Sans JP', serif;
+	color: rgb(67, 53, 32);
+}
+
+.account section {
+	width: 100%;
+	display: flex;
+}
+
+.account h1{
+	width: 70%;
+	font-size: 2rem;
+	margin-bottom: 10px;
+}
+
+.account h1 img {
+	width: 50px;
+	height: 50px;
+	border: 2px solid rgba(0, 145, 124, 0.5);
+}
+
+.account h1 span{
+	font-size: 2.5rem;
+	color: rgb(0, 145, 124);
+}
+
+.account .tab-panel p span{
+	font-size: 2rem;
+	color: rgb(0, 145, 124);
+}
+
+.account .name-form,
+.account .password-form,
+.account .user-avatar-form,
+.account .resign-form {
+	padding: 10px 20px;
+}
+
+.account .password-form table tr th:last-of-type {
+	text-align: right;
+}
+
+.account .resign-form div:first-of-type {
+	padding: 5px;
+	border: 0.5px dotted rgba(145, 0, 21, 0.5);
+}
+
+.account .resign-form div:first-of-type p:first-of-type{
+	width: fit-content;
+	border-bottom: 3px double rgba(145, 0, 21, 0.5);
+}
+
+/*** Comp (name$password update) ***/
+.comp {
+	width: 90%;
+	margin: 0 auto;
+	color: rgb(67, 53, 32);
+}
+
+/*** Group Account ***/
+.group-account {
+	width: 90%;
+	margin: 0 auto;
+	font: 1.6rem 'Noto Sans JP', serif;
+	color: rgb(67, 53, 32);
+}
+
+.group-account section {
+	width: 100%;
+	display: flex;
+}
+
+.group-account h1{
+	width: 70%;
+	font-size: 2rem;
+	margin-bottom: 10px;
+}
+
+.group-account h1 img {
+	width: 50px;
+	height: 50px;
+	border: 2px solid rgba(0, 145, 124, 0.5);
+}
+
+.group-account h1 span{
+	font-size: 2.5rem;
+	color: rgb(0, 145, 124);
+}
+
+.group-account .tab-panel p span{
+	font-size: 2rem;
+	color: rgb(0, 145, 124);
+}
+
+.group-account .group-info,
+.group-account .group-name-form,
+.group-account .group-avatar-form,
+.group-account .add-member-form,
+.group-account .remove-member-form,
+.group-account .delete-group-form {
+	padding: 10px 20px;
+}
+
+.group-account .add-member-form .member-table tr {
+	padding-left: 5px;
+	border: 1px solid rgb(223, 224, 223);
+}
+
+.group-account .add-member-form .member-table input {
+	border: none;
+	outline: none;
+}
+
+.group-account .add-member-form #search-form {
+	width: 70%;
+}
+
+.group-account .add-member-form .member-table,
+.group-account .remove-member-form .member-table {
+	width: 65%;
+	border-collapse: collapse;
+	border: 1px solid rgb(223, 224, 223);
+}
+
+.group-account .add-member-form .member-table input,
+.group-account .remove-member-form .member-table input {
+	width: 100%;
+	border: none;
+	outline: none;
+	font-size: 1.5rem;
+}
+
+.group-account .add-member-form .member-table tr,
+.group-account .remove-member-form .member-table tr {
+	width: 100%;
+	border: 1px dotted rgb(223, 224, 223);
+}
+
+.group-account .add-member-form .member-table td {
+	width: 30%;
+	padding-left: 5px;
+}
+
+.group-account .add-member-form .member-table td:nth-of-type(2) {
+	width: 50%;
+}
+
+.group-account .add-member-form .member-table td:last-of-type {
+	width: 20%;
+}
+
+.group-account .add-member-form .member-table td .btn,
+.group-account .remove-member-form .member-table .btn {
+	width: 100%;
+	font-size: 1.25rem;
+}
+
+/*** CSV ***/
+.csv {
+	width: 90%;
+	margin: 0 auto;
+	color: rgb(67, 53, 32);
+}
+
+.csv h1{
+	width: 70%;
+	font-size: 2rem;
+	margin-bottom: 10px;
+}
+
+.csv div{
+	border: 2px solid rgb(223, 224, 223);
+	border-collapse: separate;
+}
+
+/*** Contact ***/
+.contact {
+	width: 90%;
+	margin: 0 auto;
+	color: rgb(67, 53, 32);
+}
+
+.contact h1{
+	width: 70%;
+	font-size: 2rem;
+	margin-bottom: 10px;
+}
+
+.contact div{
+	width: 100%;
+	border: 2px solid rgb(223, 224, 223);
+	border-collapse: separate;
+}
+
+.contact table {
+	width: 65%;
+}
+
+.contact table th {
+	width: 15%;
+}
+.contact table td {
+	width: 85%;
+}
+
+.contact table td input,
+.contact table textarea {
+	width: 100%;
+}
+
+.contact table #name {
+	border: none;
+	outline: none;
+}
+
+.contact table tr:last-of-type {
+	text-align: right;
+}
+
+.contact table tr:last-of-type th input {
+	width: 15%;
+}
+
+/*** FAQ ***/
+.faq {
+	width: 90%;
+	margin: 0 auto;
+	color: rgb(67, 53, 32);
+}
+
+.faq h1{
+	width: 70%;
+	font-size: 2rem;
+	margin-bottom: 10px;
+}
+
+.faq div{
+	width: 100%;
+	border: 2px solid rgb(223, 224, 223);
+	border-collapse: separate;
+}
+
+.faq .q-icon {
+	width: 30px;
+	height: 30px;
+	margin-right: 5px;
+	text-align: center;
+	color: rgb(255, 255, 255);
+	background-color: rgba(145, 0, 21, 0.7);
+	border-radius: 50%;
+}
+
+.faq .a-icon {
+	width: 30px;
+	height: 30px;
+	margin-right: 5px;
+	text-align: center;
+	color: rgb(255, 255, 255);
+	background-color: rgba(0, 145, 124, 0.7);
+	border-radius: 50%;
+}
+
+.faq .a-row {
+	vertical-align: top;
+}
+

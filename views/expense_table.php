@@ -10,20 +10,29 @@
 
 	// DB接続情報
 	$pdo = connect_db(DSN, LOCAL_ID, LOCAL_PASSWORD);
-
-	// mypageで選択されたグループのgroup_idを取得する
+	
+	// group_idを取得する
 	if (isset($_POST['group_id'])) {
-		$group_id = $_POST['group_id']; 
+		$group_id = $_POST['group_id'];
 	} else {
-		if (isset($_SESSION['updated_group_id'])){
-			$group_id = $_SESSION['updated_group_id'];
-		}
+		$group_id = $_SESSION['group_id'];
 	}
-	unset($_SESSION['updated_group_id']);
 
-	// セッションにgroup_idを設定する
-	$group = get_group_name($pdo, $group_id);
+	// セッションのgroup_idとgroup_nameを変更する
+	$group = get_group_info($pdo, $group_id);
 	set_session('group_id', $group_id);
+	set_session('group_name', $group['group_name']);
+	var_dump($_SESSION);
+
+	// セッションにgroup_nameを設定する
+	$group = get_group_info($pdo, $group_id);
+	set_session('group_name', $group['group_name']);
+
+	// 端数処理用配列
+	$payment_methods = array('人数で等分', '％で分ける');
+
+	// 端数処理用配列
+	$rounding = array('四捨五入', '切り捨て', '切り上げ');
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -40,7 +49,7 @@
 <body>
 	<div id="wrapper">
 	<header>
-		<h1><a href="../index.html">おごりあい</a></h1>
+		<h1><a href="../index.html"><img src="../images/logo-sm.png" alt="ロゴ画像"></a></h1>
 		<nav>
 			<ul>
 				<li><a href="mypage.php" class="mr-3">マイページ</a></li>
@@ -75,10 +84,24 @@
 	if ($result):
 ?>
 		<section>
-			<h1><span><?php echo $group['group_name'] ?></span> 支出一覧</h1>
+			<h1>		
+				<img src="../images/avatars/group_avatars/<?php echo $group['group_avatar'] ?>" alt="グループアバター画像" class="rounded-circle avatar">
+				<span><?php echo $group['group_name'] ?></span> 支出一覧
+			</h1>
 			<ul>
-				<li><p id="modal-button" class="btn btn-lg btn-primary mr-3">グループ管理</p></li>
-				<li><a href="settle_up.php" class="btn btn-lg btn-primary mr-3">精算する</a></li>
+				<li><p id="modal-button" class="btn btn-lg btn-primary mr-3">グループの詳細</p></li>
+				<li>
+					<form action="settle_up.php" method="POST" class="m-0">
+						<input type="hidden" name="group_id" value="<?php echo $group_id ?>">
+						<input type="submit" value="清算する" class="btn btn-lg btn-primary mr-3">
+					</form>
+				</li>
+				<li>
+					<form action="csv.php" method="POST" class="m-0">
+						<input type="hidden" name="group_id" value="<?php echo $group_id ?>">
+						<input type="submit" value="CSVを出力する" class="btn btn-lg btn-primary mr-3">
+					</form>
+				</li>
 				<li><a href="mypage.php" class="btn btn-lg btn-primary">マイページに戻る</a></li>
 			</ul>
 		</section>
@@ -158,22 +181,27 @@
 							</tr>
 							<tr>
 								<th>わりかん方法：</th>
-								<td>等分</td>
+								<td><?php echo $payment_methods[$group['payment_method']] ?></td>
+							</tr>						
+							<tr>
+								<th>端数の処理方法：</th>
+								<td><?php echo $rounding[$group['rounding']] ?></td>
 							</tr>
 						</table>
-						<ul>
-							<li class="ml-3 mb-3">
-								<form action="choose_member.php" method="POST" class="m-0">
-									<input type="hidden" name="group_id" value="<?php echo $group_id ?>">
-									<input type="submit" value="メンバーを追加" class="btn btn-lg btn-primary">
-								</form>
-							</li>
-							<li class="ml-3"><a href="delete_group.php" class="btn btn-lg btn-danger">グループを削除</a></li>
-						</ul>
 					</div>
 				</div>
 			</div>
 		</main>
+		<footer>
+			<div>
+				<small>© 2021 Mai Saito.</small>
+			</div>
+			<div>
+				<p><a href="faq.html" class="btn btn-lg btn-contact mr-3">よくあるご質問</a></p>
+				<p><a href="contact.php"  class="btn btn-lg btn-contact mr-3">お問合せ</a></p>
+				<p><a href="#wrapper"><img src="../images/page-top-nude.png" alt="ページトップへ移動"></a></p>
+			</div>
+		</footer>
 	</div>
 	<script src="../script.js"></script>
 </body>

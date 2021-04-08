@@ -7,6 +7,7 @@
 	// セッション開始
 	session_start();
 	check_session('user_id');	
+	// var_dump($_SESSION);
 
 	// DB接続情報
 	$pdo = connect_db(DSN, LOCAL_ID, LOCAL_PASSWORD);
@@ -14,7 +15,7 @@
 	
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		// user_groupテーブルに選択されたユーザーを挿入する
-		add_member($pdo, $_POST['user_id'], $_SESSION['group_id']); 
+		add_member($pdo, $_POST['user_id'], $_SESSION['group_id'], 0); 
 
 		// 各ユーザーの繰越金を再計算する
 		recalculate_carryover($pdo, $_SESSION['group_id'], $_SESSION['user_id']); 
@@ -24,7 +25,7 @@
 	$result = get_member_names($pdo, $_SESSION['group_id']);
 	if ($result):
 		// group_idからgroup_nameを取得する
-		$group = get_group_name($pdo, $_SESSION['group_id']);
+		$group = get_group_info($pdo, $_SESSION['group_id']);
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -39,30 +40,52 @@
 	<link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-	<header>
-		<h1><a href="index.html">おごりあい</a></h1>
-		<nav>
-			<ul>
-				<li><a href="views/mypage.php">マイページ</a></li>
-				<li><a href="views/account.php">アカウント</a></li>
-				<li><a href="logout.php">ログアウト</a></li>
-			</ul>
-		</nav>
-	</header>
-	<main class="choose_member">
-		<h1>メンバー追加が完了しました。</h1>
-		<p>『<?php echo $group['group_name'] ?>』のメンバー</p>
-		<ul>
+	<div id="wrapper">
+		<header>
+			<h1><a href="../index.html"><img src="images/logo-sm.png" alt="ロゴ画像"></a></h1>
+			<nav>
+				<ul>
+					<li><a href="views/mypage.php" class="mr-3">マイページ</a></li>
+					<li><a href="views/account.php" class="mr-3">アカウント</a></li>
+					<li><a href="logout.php">ログアウト</a></li>
+				</ul>
+			</nav>
+		</header>
+		<main class="choose-member">
+			<p>メンバー追加が完了しました。</p>
+			<p><span><?php echo $group['group_name'] ?></span>のメンバー</p>
+			<table class="member-table mb-3">
 <?php foreach ($result as $member => $value): ?>
-			<li><?php echo $value['name'] ?></li>
+				<tr>
+					<td><?php echo $value['name'] ?></td>
+				</tr>
 <?php endforeach; ?>
-		</ul>
-		<p><a href="views/choose_member.php">メンバーをさらに追加する</a></p>
-		<p><a href="views/mypage.php">マイページに戻る</a></p>
+			</table>
+			<ul>
+				<li class="mr-3"><a href="views/choose_member.php" class="btn btn-lg btn-primary">メンバーをさらに追加する</a></li>
+				<li class="mr-3">
+					<form action="views/group_account.php" method="POST" class="m-0">
+						<input type="hidden" name="group_id" value="<?php echo $_SESSION['group_id'] ?>">
+						<input type="submit" value="グループ管理に戻る" class="btn btn-lg btn-primary">
+					</form>
+				</li>
+				<li><a href="views/mypage.php" class="btn btn-lg btn-primary">マイページに戻る</a></li>
+			</ul>
 <?php else: ?>
-		<p>メンバーが見つかりません。</p>
+			<p>メンバーが見つかりません。</p>
 <?php endif; ?>
-	</main>
+		</main>
+		<footer>
+			<div>
+				<small>© 2021 Mai Saito.</small>
+			</div>
+			<div>
+				<p><a href="views/faq.html" class="btn btn-lg btn-contact mr-3">よくあるご質問</a></p>
+				<p><a href="views/contact.php"  class="btn btn-lg btn-contact mr-3">お問合せ</a></p>
+				<p><a href="#wrapper"><img src="images/page-top-nude.png" alt="ページトップへ移動"></a></p>
+			</div>
+		</footer>
+	</div>
 <?php 
 	$stmt = null;
 	$pdo = null;

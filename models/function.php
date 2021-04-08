@@ -50,5 +50,6 @@ define('MODELS_PATH', dirname(__FILE__));
 define('ROOT_PATH', get_paths([MODELS_PATH, '../']));
 define('VIEWS_PATH', get_paths([MODELS_PATH, '..', 'views']));
 define('CONFIG_PATH', get_paths([MODELS_PATH, '..', 'config']));
+define('IMAGES_PATH', get_paths([MODELS_PATH, '..', 'images']));
 
 ?>

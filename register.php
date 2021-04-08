@@ -14,6 +14,7 @@
 <?php 
 	require_once $_SERVER['DOCUMENT_ROOT'].'/ogoriai/models/function.php';
 	require_once CONFIG_PATH.'/env.php';
+	require_once MODELS_PATH.'/user.php';
 
 	// DB接続情報
 	$pdo = connect_db(DSN, LOCAL_ID , LOCAL_PASSWORD);
@@ -33,20 +34,17 @@
 				if (!preg_match('/^[a-zA-Z0-9]+[a-zA-Z0-9-_.]*@[a-zA-Z0-9-_]+.[a-zA-Z0-9-_.]+$/', $_POST['email'])):
 					$errors['email'] = 'そのメールアドレスは無効です。';
 				else:
-					$sql = 'SELECT `email` FROM `users` WHERE `email` = :email';
-					$stmt = $pdo -> prepare($sql);
-					$stmt -> bindValue(':email', $_POST['email']);
-					$stmt -> execute();
-					$result = $stmt -> fetch();
-						if ($result):
-							$errors['email'] = 'そのメールアドレスはすでに登録済みです。';
-						else:
-							$email = $_POST['email'];
-						endif;
-					$stmt = null;
-				endif;
+					// 同じメールアドレスがないか確認する
+					$result = check_email ($pdo, $_POST['email']);
+					if ($result):
+						$errors['email'] = 'そのメールアドレスはすでに登録済みです。';
+					else:
+						$email = $_POST['email'];
+					endif;
+				$stmt = null;
 			endif;
 		endif;
+	endif;
 
 		// 名前の入力内容を確認する
 		$name = null;
@@ -91,8 +89,32 @@
 			set_session('name', $name);
 			set_session('email', $email);
 ?>
-	<h1><?php echo htmlspecialchars($name, ENT_QUOTES, 'utf-8') ?>さん、登録完了です。</h1>
-	<p><a href="views/mypage.php">マイページへ</a></p>
+	<div id="wrapper">
+		<header>
+			<h1><a href="../index.html"><img src="images/logo-sm.png" alt="ロゴ画像"></a></h1>
+			<nav>
+				<ul>
+					<li><a href="views/mypage.php" class="mr-3">マイページ</a></li>
+					<li><a href="views/account.php" class="mr-3">アカウント</a></li>
+					<li><a href="logout.php">ログアウト</a></li>
+				</ul>
+			</nav>
+		</header>
+		<main class="register-comp">
+			<h1><?php echo htmlspecialchars($name, ENT_QUOTES, 'utf-8') ?>さん、登録完了です。</h1>
+			<p><a href="views/mypage.php" class="btn btn-lg btn-primary">マイページへ</a></p>
+		</main>
+		<footer>
+			<div>
+				<small>© 2021 Mai Saito.</small>
+			</div>
+			<div>
+				<p><a href="views/faq.html" class="btn btn-lg btn-contact mr-3">よくあるご質問</a></p>
+				<p><a href="views/contact.php"  class="btn btn-lg btn-contact mr-3">お問合せ</a></p>
+				<p><a href="#wrapper"><img src="images/page-top-nude.png" alt="ページトップへ移動"></a></p>
+			</div>
+		</footer>
+	</div>	
 <?php
 		endif;
 	else:
@@ -100,6 +122,6 @@
 		exit('直接アクセスは禁止です。');
 	endif;
 	$pdo = null;
-?>	
+?>
 </body>
 </html>

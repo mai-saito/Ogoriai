@@ -77,19 +77,30 @@
 	<link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-<header>
-	<h1><a href="index.html">おごりあい</a></h1>	
-		<nav>
-			<ul>
-				<li><a href="views/mypage.php">マイページ</a></li>
-				<li><a href="views/account.php">アカウント</a></li>
-				<li><a href="logout.php">ログアウト</a></li>
-			</ul>
-		</nav>
-	</header>
-	<main>
-		<p>パスワード変更完了です。</p>
-		<p><a href="views/account.php"></a></p>
-	</main>
+	<div id="wrapper">
+		<header>
+			<h1><a href="../index.html"><img src="images/logo-sm.png" alt="ロゴ画像"></a></h1>
+			<nav>
+				<ul>
+					<li><a href="views/mypage.php" class="mr-3">マイページ</a></li>
+					<li><a href="views/account.php" class="mr-3">アカウント</a></li>
+					<li><a href="logout.php">ログアウト</a></li>
+				</ul>
+			</nav>
+		</header>
+		<main class="comp">
+			<p class="mb-3">パスワード変更完了です。</p>
+			<p><a href="views/account.php" class="btn btn-lg btn-primary">アカウントページへ戻る</a></p>
+		</main>
+		<footer>
+			<div>
+				<small>© 2021 Mai Saito.</small>
+			</div>
+			<div>
+				<p><a href="#"  class="btn btn-lg btn-contact mr-3">お問合せ</a></p>
+				<p><a href="#wrapper"><img src="images/page-top-nude.png" alt="ページトップへ移動"></a></p>
+			</div>
+		</footer>
+	</div>
 </body>
 </html>

@@ -16,6 +16,8 @@
 	$errors = array();
 
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		// group_nameの入力内容を確認する
+		$group_name = null;
 		if (!isset($_POST['group_name']) || !strlen($_POST['group_name'])) {
 			$errors['group_name'] = 'グループ名を入力してください。';
 		} else if (strlen($_POST['group_name']) > 20) {
@@ -24,23 +26,30 @@
 				$group_name = $_POST['group_name'];
 		}
 
+		// 端数処理方法を確認する
+		$rounding = null; 
+		if (!isset($_POST['rounding']) || !strlen($_POST['rounding'])) {
+			$errors['rounding'] = '端数処理方法を選択してください。';
+		} else {
+			$rounding = $_POST['rounding'];
+		}
+
 		if (count($errors) !== 0) {
 			// 入力エラーがあった場合、エラーを表示する
 			notify_errors($errors);
 		} else {
-		// groupsテーブルに新しいグループを挿入する
-			$sql = 'INSERT INTO `groups` (`group_name`) VALUES (:group_name)';
-			$stmt = $pdo -> prepare($sql);
-			$stmt -> bindValue(':group_name', $group_name);
-			$stmt -> execute();
-			$stmt = null;
+			// groupsテーブルに新しいグループを挿入する
+			create_group($pdo, $group_name, $rounding);
 
 			// セッション設定
 			set_session('group_id', $pdo -> lastInsertId());
 			set_session('group_name', $group_name);
+
+			// クッキー設定
+			setcookie('group_id', $pdo -> lastInsertId(), time() + 1000, '/');
 		}	
 		// uset_groupテーブルにユーザーを追加する
-		add_member($pdo, $_SESSION['user_id'], $_SESSION['group_id']);
+		add_member($pdo, $_SESSION['user_id'], $_SESSION['group_id'], 1);
 
 		
 	} else {

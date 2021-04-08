@@ -13,7 +13,7 @@
 <body>
 	<div id="wrapper">
 		<header>
-			<h1><a href="../index.html">おごりあい</a></h1>
+			<h1><a href="../index.html"><img src="../images/logo-sm.png" alt="ロゴ画像"></a></h1>
 			<nav>
 				<ul>
 					<li><a href="login.html" class="mr-3">ログイン</a></li>
@@ -23,12 +23,11 @@
 		</header>
 		<main class="register">
 			<section>
-				<!-- <h1>登録フォーム</h1> -->
 				<form action="../register.php" method="POST">
 					<table>
 						<tr class="form-group">
 							<th><label for="name">お名前：</label></th>
-							<td><input type="text" name="name" id="name" class="form-control"></td>
+							<td><input type="text" name="name" id="name" class="form-control" size="40"></td>
 						</tr>
 						<tr class="form-group">
 							<th><label for="email">メールアドレス：</label></th>
@@ -45,6 +44,16 @@
 				</form>
 			</section>
 		</main>
+		<footer>
+			<div>
+				<small>© 2021 Mai Saito.</small>
+			</div>
+			<div>
+				<p><a href="faq.html" class="btn btn-lg btn-contact mr-3">よくあるご質問</a></p>
+				<p><a href="contact.php"  class="btn btn-lg btn-contact mr-3">お問合せ</a></p>
+				<p><a href="#wrapper"><img src="../images/page-top-nude.png" alt="ページトップへ移動"></a></p>
+			</div>
+		</footer>
 	</div>	
 </body>
 </html>

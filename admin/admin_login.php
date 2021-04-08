@@ -1,7 +1,6 @@
 <?php 
 	require_once $_SERVER['DOCUMENT_ROOT'].'/ogoriai/models/function.php';
 	require_once CONFIG_PATH.'/env.php';	
-	require_once MODELS_PATH.'/group.php';
 	require_once MODELS_PATH.'/user.php';
 
 	// DB接続情報
@@ -27,30 +26,37 @@
 			$password = $_POST['password'];
 		}
 
-		// メールアドレスの検索をする
-		$result = check_email($pdo, $email);
-		if ($result){
-			// パスワードが一致するか確認する
-			if (password_verify($_POST['password'], $result['password'])){
-				// セッション開始
-				session_start();
-				set_session('user_id', $result['user_id']);
-				set_session('name', $result['name']);
-				set_session('email', $result['email']);
+		// メールアドレスがを確認する
+		$result = check_email ($pdo, $email);
+		if ($result) {
+			// メールアドレスが一致したユーザーが管理者権限を持っているか確認する
+			if ($result['admin'] == 1) {
+				// パスワードを確認する
+				if (password_verify($_POST['password'], $result['password'])){
+					// セッション開始
+					session_start();
+
+					// セッションにユーザー情報を入力する
+					set_session('user_id', $result['user_id']);
+					set_session('name', $result['name']);
+					set_session('email', $result['email']);
+				} else {
+					$errors['password'] = 'メールアドレスかパスワードが異なります。';
+				}
 			} else {
-				$errors['password'] = 'メールアドレスかパスワードが異なります。';
+				$errors['admin'] = '管理画面にログインするには管理者権限のあるメールアドレスとパスワードが必要です。';
 			}
 		} else {
 			$errors['email'] = 'メールアドレスかパスワードが異なります。';
 		}
 		$stmt = null;
-		
+
 		// 入力エラーがあった場合、エラーを表示する
 		if (count($errors) !== 0) {
 			notify_errors($errors);
 		} else {
 			$pdo = null;
-			header("Location: http://".$_SERVER['HTTP_HOST']."/ogoriai/views/mypage.php");
+			header("Location: http://".$_SERVER['HTTP_HOST']."/ogoriai/admin/dashboard.php");	
 		}
 	} else {
 		$pdo = null;

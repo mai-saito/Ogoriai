@@ -21,24 +21,33 @@
 	<link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+	<div id="wrapper">
+		<header>
+			<h1><a href="../index.html"><img src="images/logo-sm.png" alt="ロゴ画像"></a></h1>
+		</header>
+		<main class="comp">
 <?php 
 	// DB接続情報
 	$pdo = connect_db(DSN, LOCAL_ID, LOCAL_PASSWORD);
+
+	// 入力エラー配列
+	$errors = array();
 
 	// 削除前にユーザーのuser_idを変数として保持しておく
 	$user_id = $_SESSION['user_id'];
 
 	// ユーザーの所属するグループのgroup_idを取得する
-	$groups = get_group_member($pdo, $user_id);
+	$groups = get_groups($pdo, $user_id);
 
 	// 脱退するユーザーの繰越額を取得する
 	$remained_carryover = get_updated_carryover($pdo, $user_id);
 				
 	if ($_SERVER['REQUEST_METHOD'] === 'POST'):
 		if (!isset($_POST['password']) || !strlen($_POST['password'])):
+			$errors['no-password'] = 'パスワードを入力してください。';
 ?>
-	<p>パスワードを入力してください。</p>
-	<input type="submit" value="戻る" onclick="history.go(-1)">
+	<!-- <p>パスワードを入力してください。</p>
+	<input type="submit" value="戻る" onclick="history.go(-1)"> -->
 <?php
 			endif;
 
@@ -68,19 +77,23 @@
 					foreach ($groups as $group) {
 						foreach ($remained_carryover as $remained) {
 							if ($group['group_id'] === $remained['group_id']) {
-								recalculate_carryover_after_resignation($pdo, $group['group_id'],  $remained['carryover']);
+								recalculate_carryover_after_user_dropped($pdo, $group['group_id'],  $remained['carryover']);
 							}
 						}
 					}
 ?>
 	<p>退会処理が完了いたしました。</p>
-	<p><a href="http://localhost/ogoriai/index.html">トップへ戻る</a></p>
+	<p><a href="http://localhost/ogoriai/index.html" class="btn btn-lg btn-primary">トップへ戻る</a></p>
 <?php
 				else:
+					$errors['password'] = 'パスワードが異なります。';
+					// 入力エラーがあった場合、エラーを表示する
+					if (count($errors) != 0):
+						notify_errors($errors);
 ?>
-	<p>パスワードが異なります。</p>
 	<input type="submit" value="戻る" onclick="history.go(-1)">
-<?php	
+<?php		
+					endif;
 				endif;	
 			endif;
 		$stmt = null;	
@@ -90,5 +103,17 @@
 		endif;
 		$pdo = null;
 ?>	
+		</main>
+		<footer>
+			<div>
+				<small>© 2021 Mai Saito.</small>
+			</div>
+			<div>
+				<p><a href="views/faq.html" class="btn btn-lg btn-contact mr-3">よくあるご質問</a></p>
+				<p><a href="views/contact.php"  class="btn btn-lg btn-contact mr-3">お問合せ</a></p>
+				<p><a href="#wrapper"><img src="images/page-top-nude.png" alt="ページトップへ移動"></a></p>
+			</div>
+		</footer>
+	</div>
 </body>
 </html>

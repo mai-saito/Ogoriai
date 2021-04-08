@@ -39,7 +39,8 @@
 			notify_errors($errors);
 		} else {
 			// 支出情報をexpensesテーブルに挿入する
-			insert_new_expense($pdo, $item, $amount);
+			var_dump($_POST['group_id']);
+			insert_new_expense($pdo, $item, $amount, $_POST['group_id']);
 
 			// 先ほど登録した最新の支出データをexpenseテーブルから取得する
 			$last_expense = get_last_expense($pdo);
