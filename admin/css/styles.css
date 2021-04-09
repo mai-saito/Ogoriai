@@ -15,6 +15,7 @@ body {
 	width: 100vw;
 	height: 100vh;
 	position: relative;
+	color: rgb(67, 53, 32);
 	font: 1.6rem 'Noto Sans JP', 'Kiwi Maru', serif;
 }
 
@@ -51,13 +52,160 @@ li {
 	border: solid 1px rgb(67, 53, 32);
 }
 
+.btn-secondary {
+	width: 15%;
+	color: rgb(0, 145, 124);
+	border: double 3px rgb(0, 143, 121);
+	background-color: inherit;
+}
+
+.btn-secondary:hover {
+	color: rgb(67, 53, 32);
+	border: double 3px rgb(67, 53, 32);
+	background-color: inherit;
+}
+
+.btn-danger {
+	background-color: rgb(143, 0, 21);
+	border: solid 1px  rgb(145, 0, 21);
+}
+
+.btn-danger:hover {
+	background-color: rgb(67, 53, 32);
+	border: solid 1px  rgb(67, 53, 32);
+}
+
+
+.tab-list {
+	width: 15%;
+	display: flex;
+	flex-direction: column;
+}
+
+.tab-list li {
+	width: 90%;
+	margin-bottom: 15px;
+}
+
+.tab-content {
+	width: calc(100% - 15%);
+	height: fit-content;
+}
+
+.tab-panel {
+	width: 100%;
+	display: none;
+	border: 2px solid rgb(223, 224, 223);
+}
+
+.tab-list .is-active {
+	color: rgb(255, 255, 255);
+	background-color: rgb(0, 145, 124);
+}
+
+.tab-content .is-active {
+	display: block;
+  animation: fade 0.5s ease;
+}
+
+.avatar {
+	width: 50px;
+	height: 50px;
+	border: 2px solid rgba(0, 145, 124, 0.5);
+}
+
+/*** Header ***/
+header {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	padding: 2% 0;
+}
+
+header h1 img {
+	vertical-align: top;
+}
+
+header h1 img:hover {
+	width: 110%;
+}
+
+header li span{
+	color: rgb(0, 145, 124);
+}
+
+header ul {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+header ul li:first-of-type {
+	text-align: center;
+}
+
+header ul li a {
+	color: rgb(67, 53, 32);
+}
+
+header ul li a:hover {
+	color: rgb(0, 145, 124);
+	border-bottom: 3px dotted rgb(253, 232, 205);;
+}
+
+header #notice {
+	width: 55%;
+}
+
+/*** Footer ***/
+footer {
+	width: 80%;
+	margin: 0 auto;
+	padding: 5px 5px 0;
+	display: flex;
+	position: absolute;
+  bottom: 0;
+	left: 10%;
+	justify-content: space-between;
+	border-top: 2px dotted rgb(253, 232, 205);
+}
+
+footer div:first-of-type {
+	width: 55%;
+	margin: auto 0;
+	text-align: right;
+	color: rgb(253, 232, 205);
+}
+
+footer div:nth-of-type(2) {
+	width: 45%;
+	display: flex;
+	justify-content: flex-end;
+}
+
+footer div img {
+	width: 50%;
+	vertical-align: top;
+}
+
+.btn-contact {
+	color: rgb(67, 53, 32);
+	border: double 3px rgb(253, 232, 205);
+	background-color: inherit;
+}
+
+.btn-contact:hover {
+	color: rgb(67, 53, 32);
+	border: double 3px rgb(253, 232, 205);
+	background-color: rgba(253, 232, 205, 0.5);
+}
+
 /*** Home ***/
 .home section {
 	width: 80%;
 	margin: 0 auto;
 	display: flex;
 	padding-top: 20%;
-	color: rgb(67, 53, 32);
 }
 
 .home section h1 {
@@ -72,5 +220,74 @@ li {
 
 .home section div {
 	width: 60%;
-	padding-top: 5%;
+	padding-top: 5%
+}
+
+/*** Dashboard ***/
+.dashboard {
+	width: 90%;
+	margin: 0 auto;
+	display: block;
+}
+
+.dashboard  section {
+	display: flex;
+}
+
+.dashboard  section h1 {
+	font-size: 2rem;
+}
+
+.dashboard .tab-content .expense-table,
+.dashboard .tab-content .notice-form,
+.dashboard .tab-content .add-admin-form,
+.dashboard .tab-content .password-form,
+.dashboard .tab-content .delete-group-form,
+.dashboard .tab-content .delete-user-form{
+	padding: 10px 20px;
+}
+
+.dashboard .tab-content .expense-table #table-filter label,
+.dashboard .tab-content .add-admin-form .user-filter label,
+.dashboard .tab-content .delete-group-form .group-filter label,
+.dashboard .tab-content .delete-user-form .user-filter label {
+	font-size: 1.4rem;
+	white-space: nowrap;
+}
+
+.dashboard .tab-content .expense-table #table-filter .group_name,
+.dashboard .tab-content .expense-table #table-filter .name,
+.dashboard .tab-content .add-admin-form .user-filter .name, 
+.dashboard .tab-content .add-admin-form .user-filter .email,
+.dashboard .tab-content .delete-group-form .group-filter .group_name, 
+.dashboard .tab-content .delete-user-form .user-filter .name, 
+.dashboard .tab-content .delete-user-form .user-filter .email {
+	border: none;
+	outline: none;
+	font-size: 1.4rem;
+	background-color: inherit;
+}
+
+.dashboard .tab-content .expense-table #table-filter th {
+	width: fit-content;
+}
+
+.dashboard .tab-content .expense-table #table-filter input {
+	width: 100%;
+}
+
+.dashboard .notice-form td {
+	width: 80%;
+}
+
+.dashboard .notice-form .select-recipient {
+	display: none;
+}
+
+/*** Delete-group & Delete-user ***/
+.delete-group,
+.delete-user {
+	width: 90%;
+	margin: 0 auto;
+	display: block;
 }

@@ -35,4 +35,23 @@
 		$stmt -> execute();
 		$stmt = null;
 	}
+
+	// ユーザーをusersテーブルから削除する
+	function delete_user($pdo, $user_id) {
+		$stmt = null;
+		$sql = 'DELETE FROM `users` WHERE `user_id` = :user_id';
+		$stmt = $pdo -> prepare($sql);
+		$stmt -> bindParam(':user_id', $user_id);
+		$stmt -> execute();
+		$stmt = null;
+	}
+	// ユーザーをuser_groupテーブルから削除する
+	function delete_user_group($pdo, $user_id) {
+		$stmt = null;
+		$sql = 'DELETE FROM `user_group` WHERE `user_id` = :user_id';
+		$stmt = $pdo -> prepare($sql);
+		$stmt -> bindParam(':user_id', $user_id);
+		$stmt -> execute();
+		$stmt = null;
+	}
 ?>

@@ -110,7 +110,7 @@
 	}
 
 	// user_groupテーブルから指定のgroup_idの行を削除する
-	function delete_user_group($pdo, $group_id) {
+	function delete_user_group_by_group($pdo, $group_id) {
 		$stmt = null;
 		$sql = 'DELETE FROM user_group WHERE group_id = :group_id';
 		$stmt = $pdo -> prepare($sql);

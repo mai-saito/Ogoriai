@@ -48,7 +48,7 @@
 			delete_group($pdo, $_POST['group_id']);
 
 			// user_groupテーブルから指定のgroup_idの行を削除する
-			delete_user_group($pdo, $_POST['group_id']);
+			delete_user_group_by_group($pdo, $_POST['group_id']);
 			
 			// expensesテーブルから指定のgroup_idの支出行を削除する
 			delete_expense_by_group_id($pdo, $_POST['group_id']);

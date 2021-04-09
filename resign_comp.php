@@ -45,42 +45,31 @@
 	if ($_SERVER['REQUEST_METHOD'] === 'POST'):
 		if (!isset($_POST['password']) || !strlen($_POST['password'])):
 			$errors['no-password'] = 'パスワードを入力してください。';
-?>
-	<!-- <p>パスワードを入力してください。</p>
-	<input type="submit" value="戻る" onclick="history.go(-1)"> -->
-<?php
-			endif;
+		endif;
 
-			// パスワードが合致するか確認する
-			$sql = 'SELECT `password` FROM `users` WHERE `user_id` = :user_id';
-			$stmt = $pdo -> prepare($sql);
-			$stmt -> bindParam(':user_id', $user_id);
-			$stmt -> execute();
-			$result = $stmt -> fetch();
-			if ($result): 
-				// パスワードを確認後、usersテーブルからユーザーを削除する
-				if (password_verify($_POST['password'], $result['password'])):
-					$stmt = null;
-					$sql = 'DELETE FROM `users` WHERE `user_id` = :user_id';
-					$stmt = $pdo -> prepare($sql);
-					$stmt -> bindParam(':user_id', $user_id);
-					$stmt -> execute();
+		// パスワードが合致するか確認する
+		$sql = 'SELECT `password` FROM `users` WHERE `user_id` = :user_id';
+		$stmt = $pdo -> prepare($sql);
+		$stmt -> bindParam(':user_id', $user_id);
+		$stmt -> execute();
+		$result = $stmt -> fetch();
+		if ($result): 
+			// パスワードを確認する
+			if (password_verify($_POST['password'], $result['password'])):
+				// usersテーブルからユーザーを削除する
+				delete_user($pdo, $user_id);
+				
+				// user_groupテーブルからもユーザー情報を削除する
+				delete_user_group($pdo, $user_id);
 
-					// user_groupテーブルからもユーザー情報を削除する
-					$stmt = null;
-					$sql = 'DELETE FROM `user_group` WHERE `user_id` = :user_id';
-					$stmt = $pdo -> prepare($sql);
-					$stmt -> bindParam(':user_id', $user_id);
-					$stmt -> execute();
-
-					// ユーザーが脱退した後の繰越額を再計算する
-					foreach ($groups as $group) {
-						foreach ($remained_carryover as $remained) {
-							if ($group['group_id'] === $remained['group_id']) {
-								recalculate_carryover_after_user_dropped($pdo, $group['group_id'],  $remained['carryover']);
-							}
+				// ユーザーが脱退した後の繰越額を再計算する
+				foreach ($groups as $group) {
+					foreach ($remained_carryover as $remained) {
+						if ($group['group_id'] === $remained['group_id']) {
+							recalculate_carryover_after_user_dropped($pdo, $group['group_id'],  $remained['carryover']);
 						}
 					}
+				}
 ?>
 	<p>退会処理が完了いたしました。</p>
 	<p><a href="http://localhost/ogoriai/index.html" class="btn btn-lg btn-primary">トップへ戻る</a></p>

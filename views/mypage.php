@@ -8,6 +8,7 @@
 	session_start();
 	check_session('user_id');
 	var_dump($_SESSION);
+
 	?>
 	<!DOCTYPE html>
 	<html lang="ja">
@@ -192,34 +193,31 @@
 				</div>	
 				<!-- 新規グループ作成コンテンツ（右サイドタブコンテンツ②） -->
 				<div id="tab2" class="tab-panel group-form">
+					<h1>新しいグループをつくる</h1>
+					<p class="ml-2 p-2">
+						<span>※ </span>こちらで新しくグループを作成したユーザーがリーダーとなります。<br>
+						<span>※ </span>リーダーはグループ管理画面でグループの各種設定が行えます。
+					</p>
 					<form action="../create_group.php" method="POST" class="p-3">
-						<h1>新しいグループをつくる</h1>
-						<p class="ml-2 p-2">
-							<span>◯ </span>こちらで新しくグループを作成したユーザーがリーダーとなります。<br>
-							<span>◯ </span>リーダーはグループ管理画面でグループの各種設定が行えます。
-						</p>
-						<div>
-							<table>
-								<tr class="form-group">
-									<th><label for="group_name">グループ名：</label></th>
-									<td><input type="text" name="group_name" id="group_name" class="form-control" placeholder="新しいグループ名を入力"></td>
-								</tr>
-								<tr class="form-group">
-									<th><label for="rounding">端数の処理方法：</label></th>
-									<td>
-										<select name="rounding" id="rounding" class="form-control">
-											<option value="0"><?php echo '四捨五入' ?></option>
-											<option value="1"><?php echo '切り捨て' ?></option>
-											<option value="2"><?php echo '切り上げ' ?></option>
-										</select>
-									</td>
-							</select>
-								</tr>
-								<tr>
-									<th class="text-right"><input type="submit" value="メンバーを決める" class="btn btn-lg btn-primary mt-2"></th>
-								</tr>
-							</table>
-						</div>
+						<table>
+							<tr class="form-group">
+								<th><label for="group_name">グループ名：</label></th>
+								<td><input type="text" name="group_name" id="group_name" class="form-control" placeholder="新しいグループ名を入力"></td>
+							</tr>
+							<tr class="form-group">
+								<th><label for="rounding">端数の処理方法：</label></th>
+								<td>
+									<select name="rounding" id="rounding" class="form-control">
+										<option value="0"><?php echo '四捨五入' ?></option>
+										<option value="1"><?php echo '切り捨て' ?></option>
+										<option value="2"><?php echo '切り上げ' ?></option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th class="text-right"><input type="submit" value="メンバーを決める" class="btn btn-lg btn-primary mt-2"></th>
+							</tr>
+						</table>
 					</form>
 				</div>
 			</section>
@@ -230,12 +228,12 @@
 			</ul>
 			<div class="group-form">
 				<div class="tab-panel is-shown">
+					<h1>新しいグループをつくる</h1>
+					<p class="ml-2 p-2">
+						<span>※ </span>こちらで新しくグループを作成したユーザーがリーダーとなります。<br>
+						<span>※ </span>リーダーはグループ管理画面でグループの各種設定が行えます。
+					</p>
 					<form action="../create_group.php" method="POST" class="p-3">
-						<h1>新しいグループをつくる</h1>
-						<p class="ml-2 p-2">
-							<span>◯ </span>こちらで新しくグループを作成したユーザーがリーダーとなります。<br>
-							<span>◯ </span>リーダーはグループ管理画面でグループの各種設定が行えます。
-						</p>
 						<table>
 							<tr class="form-group">
 								<th><label for="group_name">グループ名：</label></th>

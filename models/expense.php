@@ -226,7 +226,7 @@
 			foreach ($members as $member) {
 				// ユーザーごとの支払額を算出する
 				$subtotal = get_user_total($pdo, $group_id, $member['user_id']);
-				if (!$subtotal['subtotal']) {
+				if (!$subtotal) {
 					$subtotal['subtotal'] = 0;
 				}
 

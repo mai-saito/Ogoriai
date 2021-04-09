@@ -139,23 +139,19 @@
 						</form>
 <?php
 	if ($_SERVER['REQUEST_METHOD'] === 'POST'):
-
 		// 検索フォームに文字が入力されているか確認する
-		if (isset($_POST['user'])) {
+		if (isset($_POST['user']) && strlen($_POST['user'])):
 			$user = $_POST['user'];
-		} else {
-			$user = '';
-		}
-
-		// usersテーブルにおいて名前かメールアドレスの一部であいまい検索を実行する
-		$user = '%'.$user.'%';
-		$sql = 'SELECT `user_id`, `name`, `email` FROM `users` WHERE `name` LIKE :name OR `email` LIKE :email';
-		$stmt = $pdo -> prepare($sql);
-		$stmt -> bindParam(':name', $user);
-		$stmt -> bindParam(':email', $user);
-		$stmt -> execute();
-		$result = $stmt -> fetchAll(PDO::FETCH_ASSOC);
-		if ($result):
+		
+			// usersテーブルにおいて名前かメールアドレスの一部であいまい検索を実行する
+			$user = '%'.$user.'%';
+			$sql = 'SELECT `user_id`, `name`, `email` FROM `users` WHERE `name` LIKE :name OR `email` LIKE :email';
+			$stmt = $pdo -> prepare($sql);
+			$stmt -> bindParam(':name', $user);
+			$stmt -> bindParam(':email', $user);
+			$stmt -> execute();
+			$result = $stmt -> fetchAll(PDO::FETCH_ASSOC);
+			if ($result):
 ?>
 			<table class="member-table">
 <?php 
@@ -177,13 +173,16 @@
 			ユーザーが存在しません。<br>
 			もう一度検索してください。
 		</p>
+<?php endif; ?>		
+<?php else: ?>
+		<p>検索するための入力が必要です。</p>
 <?php endif; ?>
 <?php endif; ?>
-									</div>
-									<!-- メンバー削除タブ -->
-									<div id="tab5" class="tab-panel remove-member-form">
-										<h1>メンバーを削除する</h1>
-										<table class="member-table mb-3">
+					</div>
+					<!-- メンバー削除タブ -->
+					<div id="tab5" class="tab-panel remove-member-form">
+						<h1>メンバーを削除する</h1>
+						<table class="member-table mb-3">
 <?php
 	// グループのgroup_nameを取得する
 	$members = get_member_names($pdo, $group_id);

@@ -16,6 +16,7 @@ body {
 	height: 100vh;
 	position: relative;
 	font: 1.6rem 'Noto Sans JP', 'Kiwi Maru', serif;
+	color: rgb(67, 53, 32);
 }
 
 #wrapper { 
@@ -184,7 +185,7 @@ header ul li a {
 
 header ul li a:hover {
 	color: rgb(0, 145, 124);
-	border-bottom: 3px dotted rgb(253, 232, 205);;
+	border-bottom: 3px dotted rgb(253, 232, 205);
 }
 
 header #notice {
@@ -240,7 +241,6 @@ footer div img {
 	margin: 0 auto;
 	display: flex;
 	padding-top: 20%;
-	color: rgb(67, 53, 32);
 }
 
 .home section h1 {
@@ -291,31 +291,36 @@ footer div img {
 	width: 90%;
 	margin: 0 auto;
 	display: flex;
-	font: 1.6rem 'Noto Sans JP', serif;
-	color: rgb(67, 53, 32);
 }
 
 .login section {
 	width: fit-content;
-	margin: 20% auto;
+	margin: 15% auto;
 }
 
 .login .form-control {
 	border: 1px solid rgb(223, 224, 223);
 }
 
+.login #password-reset {
+	text-align: right;
+	color: rgb(0, 145, 124);
+	font-size: 1.2rem;
+}
+
+.login #password-reset a:hover {
+	border-bottom: 3px dotted rgb(253, 232, 205);
+}
 /*** Register ***/
 .register {
 	width: 90%;
 	margin: 0 auto;
 	display: flex;
-	font: 1.6rem 'Noto Sans JP', serif;
-	color: rgb(67, 53, 32);
 }
 
 .register section {
 	width: fit-content;
-	margin: 20% auto;
+	margin: 15% auto;
 }
 
 .register .form-control {
@@ -327,18 +332,25 @@ footer div img {
 	width: 90%;
 	margin: 0 auto;
 	display: block;
-	font: 1.6rem 'Noto Sans JP', serif;
-	color: rgb(67, 53, 32);
 }
 
+/*** Password-reset ***/
+.password-reset {
+	width: 90%;
+	margin: 0 auto;
+	display: block;
+}
+
+.password-reset section {
+	width: fit-content;
+	margin: 15% auto;
+}
 
 /*** Mypage ***/
 .mypage {
 	width: 90%;
 	margin: 0 auto;
 	display: flex;
-	font: 1.6rem 'Noto Sans JP', serif;
-	color: rgb(67, 53, 32);
 }
 
 .mypage .tab-panel p span {
@@ -484,14 +496,14 @@ footer div img {
 	width: 15%;
 }
 
-
-.mypage .group-form table {
-	width: 70%
+.mypage .group-form,
+.mypage .after-register .group-form div {
+	padding: 10px 20px;
 }
 
-/* .mypage .group-form table td:first-of-type {
-	width: 50%
-} */
+.mypage .group-form table td {
+	width: 65%;
+}
 
 .mypage .after-register {
 	width: 100%;

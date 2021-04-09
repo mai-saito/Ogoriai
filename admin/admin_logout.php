@@ -6,5 +6,5 @@ if (isset($_COOKIE[session_name()])) {
 	setcookie('tab', '', time() - 1000);
 }
 session_destroy();
-header('Location: http://'.$_SERVER['HTTP_HOST'].'/ogoriai');
+header('Location: http://'.$_SERVER['HTTP_HOST'].'/ogoriai/admin/');
 ?>

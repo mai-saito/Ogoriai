@@ -1,28 +1,63 @@
-// クリックイベント処理（マイページタブ切り替え）
-const groupTabs = document.querySelectorAll('.group-list-tab .group-tab');
+// 管理画面のタブ切り替え処理
+document.addEventListener('DOMContentLoaded', handleTabs());
+	
+function handleTabs() {
+	const tabButtons = document.querySelectorAll('.btn-form-list');
+	const tabContents = document.querySelectorAll('.tab-panel');
 
-// クッキーにgroup_idを設定してリロードする
-function handleClick(event) {
-	let cookie = setCookie('group_id', event.target.id, '500', '/');
-	window.location.reload();
-}
+	// クッキーのハンドリング処理
+	let tab = handleCookie(document.cookie);
 
-// リロード（読み込み）ごとにタブのスタイルを切り替える
-window.onload = function() {
-	// クッキーを配列に変換する
-	let cookies = document.cookie.split('; ', 1);
-	cookies.forEach(function(cookie) {
-		let groupId = cookie.split('=')[1];
+	// クッキーにタブの保存情報がある場合の処理
+	if (tab['tab']) {
+		let tabNumber = tab['tab'];
 
-		// クッキーのgroup_idとidが一致するタブを探す
-		groupTabs.forEach(function (groupTab) {
-			groupTab.classList.remove('selected-group-tab');
-			if (groupTab.id == groupId) {
-				groupTab.classList.remove('tab');
-				groupTab.classList.add('selected-group-tab');
-			} 
-		});	
-	});
+		// タブボタンとタブのis-activeクラスを削除する
+		for (let i = 0; i < tabButtons.length; i++) {
+			tabButtons[i].classList.remove('is-active');
+			tabContents[i].classList.remove('is-active');
+		}
+
+		// クッキーからタブボタンを取得する
+		let selectedTabButton =　document.querySelector('[data-id='+tabNumber+']');
+		if (selectedTabButton) {
+			// クッキーから取得したタブボタンをアクティブにする
+			selectedTabButton.classList.add('is-active');
+		
+			// クッキーから取得したタブをアクティブにする
+			let selectedTabContent = document.getElementById(tabNumber);
+			selectedTabContent.classList.add('is-active');
+		} else {
+			// クッキーから取得したタブが存在しない場合は、最初のタブをアクティブにする
+			tabButtons[0].classList.add('is-active');
+			tabContents[0].classList.add('is-active');
+		}
+	
+	} 
+
+	// クリックイベントの処理
+	for (let i = 0; i < tabButtons.length; i++) {
+		tabButtons[i].addEventListener('click', function(event) {
+			let tabButton = event.currentTarget;
+			let tabContent = document.getElementById(tabButton.dataset.id);
+
+			// すべてのタブボタンのis-activeクラスを削除する
+			for (let i = 0; i < tabButtons.length; i++) {
+					tabButtons[i].classList.remove('is-active');
+					tabContents[i].classList.remove('is-active');
+			}
+			// クリックしたタブボタンにis-activeクラスを追加する
+			tabButton.classList.add('is-active');
+
+			// タブの保存情報を保存しておく
+			setCookie('tab', tabButton.dataset.id, 300, '/ogoriai/views');
+
+			// タブを表示する
+			if(tabContent !== null) {
+					tabContent.classList.add('is-active');
+			}
+		});				
+	}
 }
 
 // クッキーを設定する
@@ -32,53 +67,19 @@ function setCookie(key, value, time, path) {
 	return document.cookie;
 }
 
-// マイページ、アカウント、グループアカウントページのタブ切り替え処理
-document.addEventListener('DOMContentLoaded', handleTabs());
-	
-function handleTabs() {
-	const tabButtons = document.querySelectorAll('.btn-form-list');
-	const tabContents = document.querySelectorAll('.tab-panel');
-	const searchForm = document.querySelector('#search-form');
-
-	// 要素の数の分だけループ処理をして値を取り出す
-	for (let i = 0; i < tabButtons.length; i++) {
-		tabButtons[i].addEventListener('click', function(event) {
-			if (event.target.dataset.id === 'tab4') {
-				// すべてのタブボタンのis-activeクラスを削除する
-				for (let i = 0; i < tabButtons.length; i++) {
-					tabButtons[i].classList.remove('is-active');
-					tabContents[i].classList.remove('is-active');
-				}
-
-				// クリックしたタブボタンにis-activeクラスを追加する
-				tabButtons[3].classList.add('is-active');
-
-				// タブを表示する
-				if(tabContents[3] !== null) {
-						tabContents[3].classList.add('is-active');
-				}
-
-				// ここにリロード後も同じタブが表示される処理を書く
-				
-			} else {
-				let tabButton = event.currentTarget;
-				let tabContent = document.getElementById(tabButton.dataset.id);
-
-				// すべてのタブボタンのis-activeクラスを削除する
-				for (let i = 0; i < tabButtons.length; i++) {
-						tabButtons[i].classList.remove('is-active');
-						tabContents[i].classList.remove('is-active');
-				}
-				// クリックしたタブボタンにis-activeクラスを追加する
-				tabButton.classList.add('is-active');
-
-				// タブを表示する
-				if(tabContent !== null) {
-						tabContent.classList.add('is-active');
-				}
-			}
-		});				
+// クッキーを連想配列に変換する
+function handleCookie(cookie) {
+	let array = new Array();
+	if (cookie != '') {
+		let cookies = cookie.split( '; ' );
+		for(let i = 0; i < cookies.length; i++ ) {
+			let value = cookies[i].split('=');
+		
+			// クッキーの名前をキーとして 配列に追加する
+			array[value[0]] = decodeURIComponent(value[1]);
+		}
 	}
+	return array;
 }
 
 // マイページのグループタブ切り替え
@@ -177,7 +178,6 @@ modals.forEach(function (modal) {
 		}
 	}
 });
-
 
 
 

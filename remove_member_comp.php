@@ -44,5 +44,5 @@
 		exit('直接アクセスは禁止です。');
 	}
 	$pdo = null;
-	header('Location: http://'.$_SERVER['HTTP_HOST'].'/ogoriai/views/remove_member.php');
+	header('Location: http://'.$_SERVER['HTTP_HOST'].'/ogoriai/views/group_account.php');
 ?>

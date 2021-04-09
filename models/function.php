@@ -40,6 +40,21 @@ function notify_errors(array $errors) {
 	exit();
 }
 
+// メールを送信する
+function send_email($email, $subject, $message, $header) {
+	// 文字コードと言語を指定する
+	mb_language('Japanese');
+	mb_internal_encoding('UTF-8');
+
+	// メールを送信する
+	// mb_send_mail($email, $subject, $message, $header);
+	if (mb_send_mail($email, $subject, $message, $header)) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 // 絶対パスを設定する
 function get_paths(array $paths) {
 	$path = implode(DIRECTORY_SEPARATOR, $paths);
