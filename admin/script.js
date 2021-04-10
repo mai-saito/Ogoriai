@@ -1,8 +1,9 @@
 // 管理画面のタブ切り替え処理
 document.addEventListener('DOMContentLoaded', handleTabs());
-	
+
 function handleTabs() {
 	const tabButtons = document.querySelectorAll('.btn-form-list');
+	console.log(tabButtons)
 	const tabContents = document.querySelectorAll('.tab-panel');
 
 	// クッキーのハンドリング処理
@@ -20,6 +21,7 @@ function handleTabs() {
 
 		// クッキーから取得したタブボタンをアクティブにする
 		let selectedTabButton =　document.querySelector('[data-id='+tabNumber+']');
+		console.log(selectedTabButton);
 		selectedTabButton.classList.add('is-active');
 		
 		// クッキーから取得したタブをアクティブにする

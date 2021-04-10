@@ -179,5 +179,17 @@ modals.forEach(function (modal) {
 	}
 });
 
+// お知らせハンドリング処理
+const noticeIcon = document.querySelector('.notice-icon');
+const noticeContainer = document.querySelector('.notice-container');
+console.log(noticeIcon);
+
+noticeIcon.addEventListener('click', function() {
+	if (noticeContainer.style.display == 'none') {
+		noticeContainer.style.display = 'block';
+	} else {
+		noticeContainer.style.display = 'none';
+	}
+});
 
 

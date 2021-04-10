@@ -78,7 +78,7 @@
 	$member_subtotals = get_user_totals($pdo, $group_id);
 
 	// expenseテーブルのデータを取得する
-	$result = get_expense_list($pdo, $group_id);
+	$result = get_expense_list_by_group($pdo, $group_id);
 
 	// 一覧結果を使ってテーブルを作成する
 	if ($result):

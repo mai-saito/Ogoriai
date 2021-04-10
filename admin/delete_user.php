@@ -3,6 +3,7 @@
 	require_once CONFIG_PATH.'/env.php';
 	require_once MODELS_PATH.'/expense.php';
 	require_once MODELS_PATH.'/group.php';
+	require_once MODELS_PATH.'/user.php';
 
 	// セッション開始
 	session_start();
@@ -10,6 +11,9 @@
 
 	// DB接続情報
 	$pdo = connect_db(DSN, LOCAL_ID, LOCAL_PASSWORD);
+
+	// ユーザの情報を取得する
+	$admin_user = get_user_info($_SESSION['user_id'], $pdo);
 			
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		// user_idがPOSTで送信されているか確認する
@@ -71,7 +75,8 @@
 			</nav>
 		</header>
 		<main class="delete-user">
-			<p class="mb-3">ユーザーID：<?php echo $_POST['user_id']?> ユーザー名：<?php echo $_POST['user_name'] ?>を削除しました。</p>
+			<p>ユーザーID：<?php echo $_POST['user_id']?></p>
+			<p class="mb-3">ユーザー名：<?php echo $_POST['name'] ?> を削除しました。</p>
 			<p><a href="dashboard.php" class="btn btn-lg btn-primary">管理者画面へ戻る</a></p>
 		</main>
 		<footer>
@@ -81,7 +86,7 @@
 			<div>
 				<p><a href="views/faq.html" class="btn btn-lg btn-contact mr-3">よくあるご質問</a></p>
 				<p><a href="views/contact.php"  class="btn btn-lg btn-contact mr-3">お問合せ</a></p>
-				<p><a href="#wrapper"><img src="images/page-top-nude.png" alt="ページトップへ移動"></a></p>
+				<p><a href="#wrapper"><img src="../images/page-top-nude.png" alt="ページトップへ移動"></a></p>
 			</div>
 		</footer>
 	</div>

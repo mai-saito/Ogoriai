@@ -54,11 +54,32 @@
 	}
 
 	// グループごとの支出一覧を表示する
-	function get_expense_list($pdo, $group_id) {
+	function get_expense_list_by_group($pdo, $group_id) {
 		$stmt = null;
 		$sql = 'SELECT e.item, e.amount, u.name, u.user_id, e.date, g.group_name, g.group_id, e.expense_id FROM expenses e LEFT OUTER JOIN users u ON u.user_id = e.user_id INNER JOIN groups g ON g.group_id = e.group_id WHERE e.group_id = :group_id';
 		$stmt = $pdo -> prepare($sql);
-		$stmt -> bindParam('group_id', $group_id);
+		$stmt -> bindParam(':group_id', $group_id);
+		$stmt -> execute();
+		return $stmt -> fetchAll(PDO::FETCH_ASSOC);
+	}
+
+	// ユーザーごとの支出一覧を表示する
+	function get_expense_list_by_user($pdo, $user_id) {
+		$stmt = null;
+		$sql = 'SELECT e.item, e.amount, u.name, u.user_id, e.date, g.group_name, g.group_id, e.expense_id FROM expenses e LEFT OUTER JOIN users u ON u.user_id = e.user_id INNER JOIN groups g ON g.group_id = e.group_id WHERE e.user_id = :user_id';
+		$stmt = $pdo -> prepare($sql);
+		$stmt -> bindParam(':user_id', $user_id);
+		$stmt -> execute();
+		return $stmt -> fetchAll(PDO::FETCH_ASSOC);
+	}
+
+	// グループとユーザーを指定して支出一覧を表示する
+	function get_expense_list($pdo, $group_id, $user_id) {
+		$stmt = null;
+		$sql = 'SELECT e.item, e.amount, u.name, u.user_id, e.date, g.group_name, g.group_id, e.expense_id FROM expenses e LEFT OUTER JOIN users u ON u.user_id = e.user_id INNER JOIN groups g ON g.group_id = e.group_id WHERE e.group_id = :group_id AND e.user_id = :user_id';
+		$stmt = $pdo -> prepare($sql);
+		$stmt -> bindParam(':group_id', $group_id);
+		$stmt -> bindParam(':user_id', $user_id);
 		$stmt -> execute();
 		return $stmt -> fetchAll(PDO::FETCH_ASSOC);
 	}
@@ -251,7 +272,7 @@
 	function recalculate_carryover_after_user_dropped($pdo, $group_id, $remained_carryover) {
 		// 脱退したユーザーが所属していたグループの人数を取得する
 		$result = get_specific_group($pdo, $group_id);
-		var_dump($result);
+		// var_dump($result);
 		if ($result) {
 			// 脱退したユーザーの繰越額を等分する
 			if ($remained_carryover !== 0) {
@@ -259,15 +280,15 @@
 			} else {
 				$devided = 0;
 			}
-			var_dump($devided);
+			// var_dump($devided);
 			
 			// 現在の残りのメンバーの繰越額を取得する
 			$members = get_carryover($pdo, $group_id);
-			var_dump($members);
+			// var_dump($members);
 			foreach ($members as $member) {
 				// 現在の繰越額に脱退したユーザーの繰越額を上乗せする
 				$updated_carryover = $member['carryover'] + $devided;
-				var_dump($updated_carryover);
+				// var_dump($updated_carryover);
 
 				// 残ったメンバーの繰越額を更新する
 				update_carryover($pdo, $updated_carryover, $group_id, $member['user_id']);

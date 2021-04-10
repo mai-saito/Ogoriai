@@ -13,13 +13,12 @@
 	// エラー入力配列
 	$errors = array();
 
-	// ユーザーの名前をアップデートする
 	if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 		// user_idがPOSTされているか確認する
-		if (isset($_POST['user_id'])) {
-			$user_id = $_POST['user_id'];
-		} else {
+		if (!isset($_POST['user_id']) || !strlen($_POST['user_id'])) {
 			$errors['user_id'] = '送信エラーです。';
+		} else {
+			$user_id = $_POST['user_id'];
 		}
 
 		if (count($errors) != 0) {

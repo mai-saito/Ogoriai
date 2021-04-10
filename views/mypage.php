@@ -3,11 +3,11 @@
 	require_once CONFIG_PATH.'/env.php';
 	require_once MODELS_PATH.'/group.php';
 	require_once MODELS_PATH.'/expense.php';
+	require_once MODELS_PATH.'/notice.php';
 
 	// セッション開始
 	session_start();
 	check_session('user_id');
-	var_dump($_SESSION);
 
 	?>
 	<!DOCTYPE html>
@@ -29,6 +29,15 @@
 				<h1><a href="../index.html"><img src="../images/logo-sm.png" alt="ロゴ画像"></a></h1>
 				<nav>
 					<ul>
+<?php 
+	// お知らせがあるか確認する
+	$notices = get_notice($pdo, $_SESSION['user_id']);
+	if (!$notices):
+?>
+						<li class="notice-icon"><a href="#"><img src="../images/bell-brown.png" alt="" id="no-notice"></a></li>
+<?php else: ?>
+						<li class="notice-icon"><a href="#"><img src="../images/notice-bell-brown.png" alt="" id="notice"></a></li>
+<?php endif; ?>
 						<li><a href="mypage.php" class="mr-3">マイページ</a></li>
 						<li><a href="account.php" class="mr-3">アカウント</a></li>
 						<li><a href="../logout.php">ログアウト</a></li>
@@ -36,6 +45,21 @@
 				</nav>
 			</header>
 			<main class="mypage">
+				<!-- お知らせセクション -->
+				<div class="notice-container">
+					<ul class="notice-list">
+<?php foreach($notices as $notice): ?>
+						<li>
+							<form action="display_notice.php" method="POST">
+								<input type="hidden" name="notice_id" value="<?php echo $notice['notice_id'] ?>">
+								<input type="submit" class="notice-title" value="<?php echo $notice['title'] ?>">
+							</form>
+						</li>
+						<li class="notice-date"><?php echo $notice['date'] ?></li>
+<?php endforeach; ?>
+					</ul>
+				</div>
+				<!-- メインセクション -->
 <?php	
 	// DB接続情報
 	$pdo = connect_db(DSN, LOCAL_ID, LOCAL_PASSWORD);

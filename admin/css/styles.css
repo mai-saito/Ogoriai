@@ -240,6 +240,8 @@ footer div img {
 
 .dashboard .tab-content .expense-table,
 .dashboard .tab-content .notice-form,
+.dashboard .tab-content .user-search-form,
+.dashboard .tab-content .group-search-form,
 .dashboard .tab-content .add-admin-form,
 .dashboard .tab-content .password-form,
 .dashboard .tab-content .delete-group-form,
@@ -248,6 +250,9 @@ footer div img {
 }
 
 .dashboard .tab-content .expense-table #table-filter label,
+.dashboard .tab-content .notice-form label,
+.dashboard .tab-content .user-search-form .user-filter label,
+.dashboard .tab-content .group-search-form .group-filter label,
 .dashboard .tab-content .add-admin-form .user-filter label,
 .dashboard .tab-content .delete-group-form .group-filter label,
 .dashboard .tab-content .delete-user-form .user-filter label {
@@ -257,8 +262,6 @@ footer div img {
 
 .dashboard .tab-content .expense-table #table-filter .group_name,
 .dashboard .tab-content .expense-table #table-filter .name,
-.dashboard .tab-content .add-admin-form .user-filter .name, 
-.dashboard .tab-content .add-admin-form .user-filter .email,
 .dashboard .tab-content .delete-group-form .group-filter .group_name, 
 .dashboard .tab-content .delete-user-form .user-filter .name, 
 .dashboard .tab-content .delete-user-form .user-filter .email {
@@ -276,12 +279,51 @@ footer div img {
 	width: 100%;
 }
 
-.dashboard .notice-form td {
-	width: 80%;
+.dashboard .tab-content .dashboard-table  {
+	width: 100%;
+	border: 1px solid rgb(223, 224, 223);
+}
+
+.dashboard .tab-content .dashboard-table tr,
+.dashboard .tab-content .dashboard-table th,
+.dashboard .tab-content .dashboard-table td {
+	border: 1px dotted rgb(223, 224, 223);
+	padding-left: 5px;
+}
+
+.dashboard .tab-content .dashboard-table th {
+	background-color: rgba(0, 145, 124, 0.1);
+}
+
+.dashboard .tab-content .dashboard-table .btn-cell {
+	width: 20%;
+	text-align: center;
+}
+.dashboard .tab-content .dashboard-table .btn {
+	width: 90%;
+}
+
+.dashboard .tab-content .notice-form table {
+	width: 90%;
+}
+
+.dashboard .notice-form table th {
+	width: 10%;
+}
+
+.dashboard .notice-form table td {
+	width: 40%;
 }
 
 .dashboard .notice-form .select-recipient {
 	display: none;
+}
+
+.dashboard .tab-content .user-search-form .member-table tr,
+.dashboard .tab-content .user-search-form .member-table th,
+.dashboard .tab-content .user-search-form .member-table td {
+	padding-left: 5px;
+	border: 1px solid rgb(223, 224, 223);
 }
 
 /*** Delete-group & Delete-user ***/

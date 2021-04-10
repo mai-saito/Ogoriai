@@ -25,6 +25,19 @@
 		return $stmt -> fetch();
 	}
 
+	// ユーザーの名前かメールアドレスからあいまい検索をかける
+	function get_user_info_with_keyword($pdo, $keyword) {
+		$stmt = null;
+		// usersテーブルにおいて名前かメールアドレスの一部であいまい検索を実行する
+		$keyword = '%'.$keyword.'%';
+		$sql = 'SELECT * FROM `users` WHERE `name` LIKE :name OR `email` LIKE :email';
+		$stmt = $pdo -> prepare($sql);
+		$stmt -> bindParam(':name', $keyword);
+		$stmt -> bindParam(':email', $keyword);
+		$stmt -> execute();
+		return $stmt -> fetchAll(PDO::FETCH_ASSOC);
+	}
+
 	// user_avatarをアップロードする
 	function update_user_avatar($user_avatar, $user_id, $pdo) {
 		$stmt = null;

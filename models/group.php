@@ -28,9 +28,21 @@
 	// グループのメンバーの名前とuser_idを取得する
 	function get_member_names($pdo, $group_id) {
 		$stmt = null;
-		$sql ='SELECT u.name, u.user_id FROM users AS u WHERE u.user_id IN (SELECT u_g.user_id FROM user_group AS u_g WHERE group_id = :group_id)';
+		$sql ='SELECT u.name, u.user_id, u.email FROM users AS u WHERE u.user_id IN (SELECT u_g.user_id FROM user_group AS u_g WHERE group_id = :group_id)';
 		$stmt = $pdo -> prepare($sql);
 		$stmt -> bindParam(':group_id', $group_id);
+		$stmt -> execute();
+		return $stmt -> fetchAll(PDO::FETCH_ASSOC);
+	}
+
+	// グループ名からあいまい検索をかけて、グループのメンバーの名前とuser_idを取得する
+	function get_member_names_with_keyword($pdo, $group_name) {
+		$stmt = null;
+		// usersテーブルにおいて名前かメールアドレスの一部であいまい検索を実行する
+		$group_name = '%'.$group_name.'%';
+		$sql = 'SELECT u.user_id, u.name, u.email u_g.group_leader, g.group_id, g.group_name FROM users AS u INNER JOIN user_group AS u_g ON u_g.user_id = u.user_id INNER JOIN groups AS g ON g.group_id = u_g.group_id WHERE group_name LIKE :group_name';
+		$stmt = $pdo -> prepare($sql);
+		$stmt -> bindParam(':group_name', $group_name);
 		$stmt -> execute();
 		return $stmt -> fetchAll(PDO::FETCH_ASSOC);
 	}

@@ -2,6 +2,7 @@
 	require_once $_SERVER['DOCUMENT_ROOT'].'/ogoriai/models/function.php';
 	require_once CONFIG_PATH.'/env.php';
 	require_once MODELS_PATH.'/group.php';
+	require_once MODELS_PATH.'/user.php';
 	require_once MODELS_PATH.'/expense.php';
 
 	// セッション確認
@@ -10,6 +11,9 @@
 
 	// DB接続情報
 	$pdo = connect_db(DSN, LOCAL_ID, LOCAL_PASSWORD);
+
+	// ユーザの情報を取得する
+	$admin_user = get_user_info($_SESSION['user_id'], $pdo);
 
 	// 入力エラー配列
 	$errors = array();
@@ -28,9 +32,7 @@
 		} else {
 			exit('group_idの指定がありません。');
 		}
-	} else {
-		$pdo = null;
-		exit('直接アクセスは禁止です。');
+	// 
 	}
 	$pdo = null;
 ?>
@@ -59,7 +61,8 @@
 			</nav>
 		</header>
 		<main class="delete-group">
-			<p class="mb-3">グループID：<?php echo $_POST['group_id']?> グループ名：<?php echo $_POST['group_name'] ?>を削除しました。</p>
+			<p class="mb-3">グループID：<?php echo $_POST['group_id']?></p>
+			<p> グループ名：<?php echo $_POST['group_name'] ?> を削除しました。</p>
 			<p><a href="dashboard.php" class="btn btn-lg btn-primary">管理者画面へ戻る</a></p>
 		</main>
 		<footer>
@@ -68,7 +71,7 @@
 			</div>
 			<div>
 				<p><a href="#"  class="btn btn-lg btn-contact mr-3">お問合せ</a></p>
-				<p><a href="#wrapper"><img src="images/page-top-nude.png" alt="ページトップへ移動"></a></p>
+				<p><a href="#wrapper"><img src="../images/page-top-nude.png" alt="ページトップへ移動"></a></p>
 			</div>
 		</footer>
 	</div>

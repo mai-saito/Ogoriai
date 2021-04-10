@@ -179,6 +179,19 @@ header ul li:first-of-type {
 	text-align: center;
 }
 
+header ul li #notice {
+	width: 60%;
+}
+
+header ul li #no-notice {
+	width: 50%;
+}
+
+header ul li #notice:hover,
+header ul li #no-notice:hover {
+	cursor: pointer;
+}
+
 header ul li a {
 	color: rgb(67, 53, 32);
 }
@@ -233,6 +246,69 @@ footer div img {
 	color: rgb(67, 53, 32);
 	border: double 3px rgb(253, 232, 205);
 	background-color: rgba(253, 232, 205, 0.5);
+}
+
+/*** Notice ***/
+.notice-container {
+	display: none;
+	position: absolute;
+	top: 60px;
+	left: calc(100vw - 465px);
+	z-index: 999;
+}
+
+.notice-container:before {
+	border-right: 10px solid transparent;
+  border-bottom: 10px solid rgb(223, 224, 223);
+  border-left: 10px solid transparent;  
+  width: 0;
+  height: 0;
+	display: block;
+  position: absolute;
+  top: -10px;
+  content: '';         
+}
+
+.notice-container .notice-list {
+	width: calc(100vw / 6);
+	padding: 5px;
+	background-color: rgb(255, 255, 255);
+	border: 2px solid rgb(223, 224, 223);
+}
+
+.notice-container .notice-list .notice-title {
+	outline: none;
+	border: none;
+	background-color: inherit;
+}
+
+.notice-container .notice-list .notice-date {
+	text-align: right;
+	border-bottom: 2px dotted rgb(223, 224, 223);
+}
+
+.notice-container .notice-list .notice-date:last-of-type {
+	border-bottom: none;
+}
+
+.notice {
+	width: 90%;
+	margin: 0 auto;
+	display: block;
+}
+
+.notice .notice-name {
+	color: rgb(0, 145, 124);
+	font-size: 2rem;
+	text-align: right;
+}
+
+.notice .notice-date {
+	text-align: right;
+}
+
+.notice .notice-content {
+	border: 2px solid rgb(223, 224, 223)
 }
 
 /*** Home ***/
