@@ -1,5 +1,6 @@
 <?php 
 	require_once $_SERVER['DOCUMENT_ROOT'].'/ogoriai/models/function.php';
+	require_once MODELS_PATH.'/notice.php';
 
 	// セッション開始
 	session_start();
@@ -31,6 +32,21 @@
 				</nav>
 			</header>
 			<main class="contact">
+				<!-- お知らせセクション -->
+				<div class="notice-container">
+					<ul class="notice-list">
+<?php foreach($notices as $notice): ?>
+						<li>
+							<form action="display_notice.php" method="POST">
+								<input type="hidden" name="title" value="<?php echo $notice['notice_id'] ?>">
+								<input type="submit" class="notice-title" value="<?php echo $notice['title'] ?>">
+							</form>
+						</li>
+						<li class="notice-date"><?php echo $notice['date'] ?></li>
+<?php endforeach; ?>
+					</ul>
+				</div>
+				<!-- メインセクション -->
 				<h1 class="mb-4">お問合せフォーム</h1>
 				<form action="#" method="POST">
 					<div class="p-3">
@@ -65,5 +81,6 @@
 				</div>
 			</footer>
 		</div>
+		<script src="../script.js"></script>
 	</body>
 	</html>	

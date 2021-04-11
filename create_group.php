@@ -46,7 +46,7 @@
 			set_session('group_name', $group_name);
 
 			// クッキー設定
-			setcookie('group_id', $pdo -> lastInsertId(), time() + 1000, '/');
+			setcookie('tab', 'tab1', time() + 300, '/ogoriai/views');
 		}	
 		// uset_groupテーブルにユーザーを追加する
 		add_member($pdo, $_SESSION['user_id'], $_SESSION['group_id'], 1);
@@ -57,5 +57,5 @@
 		exit('直接アクセスは禁止です。');
 	}
 	$pdo = null;
-	header('Location: http://'.$_SERVER['HTTP_HOST'].'/ogoriai/views/choose_member.php');
+	header('Location: http://'.$_SERVER['HTTP_HOST'].'/ogoriai/views/mypage.php');
 ?>

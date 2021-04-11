@@ -239,7 +239,7 @@
 								</td>
 							</tr>
 							<tr>
-								<th class="text-right"><input type="submit" value="メンバーを決める" class="btn btn-lg btn-primary mt-2"></th>
+								<th class="text-right"><input type="submit" value="グループ設定へ" class="btn btn-lg btn-primary mt-2"></th>
 							</tr>
 						</table>
 					</form>
@@ -275,7 +275,7 @@
 						</select>
 							</tr>
 							<tr>
-								<th class="text-right" colspan="2"><input type="submit" value="メンバーを決める" class="btn btn-lg btn-primary mt-2"></th>
+								<th class="text-right" colspan="2"><input type="submit" value="グループ設定へ" class="btn btn-lg btn-primary mt-2"></th>
 							</tr>
 						</table>
 					</form>

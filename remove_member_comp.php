@@ -14,17 +14,14 @@
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		// 指定のユーザーの繰越金額を取得する
 		$carryovers = get_updated_carryover($pdo, $_POST['user_id']);
-		var_dump($carryovers);
 		foreach ($carryovers as $carryover) {
 			if ($carryover['group_id'] == $_POST['group_id']) {
 				$remained_carryover = $carryover['carryover'];
-				var_dump($remained_carryover);
 			}
 		}
 
 		// 指定のユーザーをグループから削除する
 		delete_specified_user_group($pdo, $_POST['group_id'], $_POST['user_id']);
-		var_dump($remained_carryover);
 
 		// グループの繰越金を再計算する
 		recalculate_carryover_after_user_dropped($pdo, $_POST['group_id'], $remained_carryover);

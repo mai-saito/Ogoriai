@@ -32,7 +32,6 @@ function handleTabs() {
 			tabButtons[0].classList.add('is-active');
 			tabContents[0].classList.add('is-active');
 		}
-	
 	} 
 
 	// クリックイベントの処理
@@ -91,7 +90,6 @@ function handleLoad() {
 	groupTabContents[0].classList.add('is-active');
 }
 
-
 for (let i = 0; i < groupTabButtons.length; i++) {
 	// 画面ロード時のタブ表示処理（先頭のグループを表示する）
 	groupTabButtons[i].addEventListener('click', handleLoad());
@@ -114,12 +112,6 @@ for (let i = 0; i < groupTabButtons.length; i++) {
 				groupTabContent.classList.add('is-active');
 			}
 	});
-}
-
-// console.log(localStorage);
-function setCurrentTab(selectedTab) {
-	localStorage.setItem('tab', selectedTab);
-	console.log(localStorage.getItem('tab'));
 }
 
 // 確認事項のチェック処理
@@ -151,7 +143,6 @@ const close = document.querySelectorAll('.expense-table .modal .close');
 modalButtons.forEach(function (modalButton) {
 	modals.forEach(function (modal) {
 		modalButton.onclick = function () {
-			console.log('hey')
 			if (modal.style.display === 'block') {
 				modal.style.display = 'none';
 			} else {
@@ -182,7 +173,6 @@ modals.forEach(function (modal) {
 // お知らせハンドリング処理
 const noticeIcon = document.querySelector('.notice-icon');
 const noticeContainer = document.querySelector('.notice-container');
-console.log(noticeIcon);
 
 noticeIcon.addEventListener('click', function() {
 	if (noticeContainer.style.display == 'none') {

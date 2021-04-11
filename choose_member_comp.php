@@ -3,6 +3,7 @@
 	require_once CONFIG_PATH.'/env.php';
 	require_once MODELS_PATH.'/group.php';
 	require_once MODELS_PATH.'/expense.php';
+	require_once MODELS_PATH.'/notice.php';
 	
 	// セッション開始
 	session_start();
@@ -45,6 +46,15 @@
 			<h1><a href="../index.html"><img src="images/logo-sm.png" alt="ロゴ画像"></a></h1>
 			<nav>
 				<ul>
+<?php 
+	// お知らせがあるか確認する
+	$notices = get_notice($pdo, $_SESSION['user_id']);
+	if (!$notices):
+?>
+					<li class="notice-icon"><img src="images/bell-brown.png" alt="お知らせ" id="notice"></li>
+<?php else: ?>
+					<li class="notice-icon"><img src="images/notice-bell-brown.png" alt="お知らせ" id="notice"></li>
+<?php endif; ?>
 					<li><a href="views/mypage.php" class="mr-3">マイページ</a></li>
 					<li><a href="views/account.php" class="mr-3">アカウント</a></li>
 					<li><a href="logout.php">ログアウト</a></li>
@@ -52,6 +62,21 @@
 			</nav>
 		</header>
 		<main class="choose-member">
+			<!-- お知らせセクション -->
+			<div class="notice-container">
+				<ul class="notice-list">
+<?php foreach($notices as $notice): ?>
+					<li>
+						<form action="display_notice.php" method="POST">
+							<input type="hidden" name="title" value="<?php echo $notice['notice_id'] ?>">
+							<input type="submit" class="notice-title" value="<?php echo $notice['title'] ?>">
+						</form>
+					</li>
+					<li class="notice-date"><?php echo $notice['date'] ?></li>
+<?php endforeach; ?>
+				</ul>
+			</div>
+			<!-- メインセクション -->
 			<p>メンバー追加が完了しました。</p>
 			<p><span><?php echo $group['group_name'] ?></span>のメンバー</p>
 			<table class="member-table mb-3">
@@ -62,7 +87,7 @@
 <?php endforeach; ?>
 			</table>
 			<ul>
-				<li class="mr-3"><a href="views/choose_member.php" class="btn btn-lg btn-primary">メンバーをさらに追加する</a></li>
+				<li class="mr-3"><a href="views/group_account.php" class="btn btn-lg btn-primary">メンバーをさらに追加する</a></li>
 				<li class="mr-3">
 					<form action="views/group_account.php" method="POST" class="m-0">
 						<input type="hidden" name="group_id" value="<?php echo $_SESSION['group_id'] ?>">
@@ -90,5 +115,6 @@
 	$stmt = null;
 	$pdo = null;
 ?>
+	<script src="script.js"></script>
 </body>
 </html>

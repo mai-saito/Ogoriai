@@ -32,7 +32,7 @@
 	// 自分へのお知らせを受け取る
 	function get_notice($pdo, $recipient_id) {
 		$stmt = null;
-		$sql = 'SELECT n.notice_id, n.title, n.content, n.date, u_n.sender_id, u_n.recipient_id FROM notices AS n INNER JOIN user_notice AS u_n ON u_n.notice_id = n.notice_id INNER JOIN users AS u ON u.user_id = u_n.sender_id WHERE u_n.recipient_id = :recipient_id';
+		$sql = 'SELECT n.notice_id, n.title, n.content, n.date, u_n.sender_id, u_n.recipient_id FROM notices AS n INNER JOIN user_notice AS u_n ON u_n.notice_id = n.notice_id INNER JOIN users AS u ON u.user_id = u_n.sender_id WHERE u_n.recipient_id = :recipient_id AND u_n.read = 0';
 		$stmt = $pdo -> prepare($sql);
 		$stmt -> bindParam(':recipient_id', $recipient_id);
 		$stmt -> execute();
@@ -48,5 +48,16 @@
 		$stmt -> bindParam(':recipient_id', $recipient_id);
 		$stmt -> execute();
 		return $stmt -> fetch(PDO::FETCH_ASSOC);
+	}
+
+	// 読んだお知らせを既読にする
+	function update_read_status($pdo, $notice_id, $recipient_id) {
+		$stmt = null ;
+		$sql = 'UPDATE user_notice SET `read` = 1 WHERE notice_id = :notice_id AND recipient_id = :recipient_id';
+		$stmt = $pdo -> prepare($sql);
+		$stmt -> bindParam(':notice_id', $notice_id);
+		$stmt -> bindParam(':recipient_id', $recipient_id);
+		$stmt -> execute();
+		$stmt = null;
 	}
 ?>

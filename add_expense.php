@@ -39,7 +39,6 @@
 			notify_errors($errors);
 		} else {
 			// 支出情報をexpensesテーブルに挿入する
-			var_dump($_POST['group_id']);
 			insert_new_expense($pdo, $item, $amount, $_POST['group_id']);
 
 			// 先ほど登録した最新の支出データをexpenseテーブルから取得する
@@ -48,8 +47,14 @@
 			// 取得した最新のexpenseデータをグループの人数で等分する
 			$devided = devide_evenly($pdo, $last_expense, $_SESSION['user_id']);
 
+			// グループの端数処理方法を取得する
+			$rounding = get_group_info($pdo, $_POST['group_id']);
+
+			// 端数処理方法で分岐させ、端数を計算する
+			$rounded_devided = round_numbers($rounding['rounding'], $devided);
+
 			// 各ユーザーの繰越金額をアップデートする
-			calculate_carryover($pdo, $devided, $last_expense);
+			calculate_carryover($pdo, $rounded_devided , $last_expense);
 		}
 		$stmt = null;
 	} else {

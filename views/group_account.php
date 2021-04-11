@@ -23,6 +23,12 @@
 	set_session('group_id', $group_id);
 	set_session('group_name', $group['group_name']);
 
+	// 端数処理用配列
+	$rounding = array('四捨五入', '切り捨て', '切り上げ');
+
+	// 端数処理用配列
+	$payment_methods = array('人数で等分', '％で分ける');
+
 	// グループメンバーの名前を取得する
 	$members = get_member_names($pdo, $group_id);
 ?>
@@ -92,7 +98,7 @@
 				</ul>
 				<!-- 切り替え表示用タブ -->
 				<div class="tab-content">
-					<!-- グループ名変更タブ -->
+					<!-- グループ基本情報タブ -->
 					<div id="tab1" class="tab-panel group-info is-active">
 						<h1><span><?php echo $group['group_name'] ?></span>の基本情報</h1>
 						<table>
@@ -112,14 +118,15 @@
 						</tr>
 							<tr>
 								<th>端数処理：</th>
-								<td>四捨五入</td>
+								<td><?php echo $rounding[$group['rounding']] ?></td>
 							</tr>
 							<tr>
 								<th>わりかん方法：</th>
-								<td>等分</td>
+								<td><?php echo $payment_methods[$group['payment_method']] ?></td>
 							</tr>
 						</table>
 					</div>
+					
 					<!-- グループ名変更タブ -->
 					<div id="tab2" class="tab-panel group-name-form">
 						<h1>グループ名を変更する</h1>

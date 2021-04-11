@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', handleTabs());
 
 function handleTabs() {
 	const tabButtons = document.querySelectorAll('.btn-form-list');
-	console.log(tabButtons)
 	const tabContents = document.querySelectorAll('.tab-panel');
 
 	// クッキーのハンドリング処理
@@ -21,7 +20,6 @@ function handleTabs() {
 
 		// クッキーから取得したタブボタンをアクティブにする
 		let selectedTabButton =　document.querySelector('[data-id='+tabNumber+']');
-		console.log(selectedTabButton);
 		selectedTabButton.classList.add('is-active');
 		
 		// クッキーから取得したタブをアクティブにする
@@ -81,7 +79,6 @@ const select = document.getElementById('recipient');
 const input = document.querySelector('.select-recipient');
 
 select.onchange = function() {
-	console.log(this.value);
 	// 送信先としてグループかユーザーの指定がある場合のみinputを出す
 	if (this.value == 1 || this.value == 2) {
 		input.style.display = 'block';
@@ -89,3 +86,15 @@ select.onchange = function() {
 		input.style.display = 'none';
 	}
 }
+
+// お知らせハンドリング処理
+const noticeIcon = document.querySelector('.notice-icon');
+const noticeContainer = document.querySelector('.notice-container');
+
+noticeIcon.addEventListener('click', function() {
+	if (noticeContainer.style.display == 'none') {
+		noticeContainer.style.display = 'block';
+	} else {
+		noticeContainer.style.display = 'none';
+	}
+});

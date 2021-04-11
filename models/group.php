@@ -8,7 +8,7 @@
 	// ユーザーが所属する各グループの情報を取得する
 	function get_groups($pdo, $user_id) {
 		$stmt = null;
-		$sql = 'SELECT COUNT(u.user_id) AS number_of_members, g.group_name, g.group_id, g.group_avatar FROM users AS u INNER JOIN user_group AS u_g ON u_g.user_id = u.user_id INNER JOIN groups AS g ON g.group_id = u_g.group_id WHERE g.group_id IN (SELECT g.group_id FROM users AS u INNER JOIN user_group AS u_g ON u_g.user_id = u.user_id INNER JOIN groups AS g ON g.group_id = u_g.group_id WHERE u_g.user_id = :user_id) GROUP BY g.group_id';
+		$sql = 'SELECT COUNT(u.user_id) AS number_of_members, g.group_name, g.group_id, g.group_avatar, g.rounding FROM users AS u INNER JOIN user_group AS u_g ON u_g.user_id = u.user_id INNER JOIN groups AS g ON g.group_id = u_g.group_id WHERE g.group_id IN (SELECT g.group_id FROM users AS u INNER JOIN user_group AS u_g ON u_g.user_id = u.user_id INNER JOIN groups AS g ON g.group_id = u_g.group_id WHERE u_g.user_id = :user_id) GROUP BY g.group_id';
 		$stmt = $pdo -> prepare($sql);
 		$stmt -> bindParam(':user_id', $user_id);
 		$stmt -> execute();
@@ -18,7 +18,7 @@
 	// 指定のグループの情報を取得する
 	function get_specific_group($pdo, $group_id) {
 		$stmt = null;
-		$sql = 'SELECT COUNT(u.user_id) AS number_of_members, g.group_name, g.group_id FROM users AS u INNER JOIN user_group AS u_g ON u_g.user_id = u.user_id INNER JOIN groups AS g ON g.group_id = u_g.group_id WHERE g.group_id = :group_id GROUP BY g.group_id';
+		$sql = 'SELECT COUNT(u.user_id) AS number_of_members, g.group_name, g.group_id, g.rounding FROM users AS u INNER JOIN user_group AS u_g ON u_g.user_id = u.user_id INNER JOIN groups AS g ON g.group_id = u_g.group_id WHERE g.group_id = :group_id GROUP BY g.group_id';
 		$stmt = $pdo -> prepare($sql);
 		$stmt -> bindParam(':group_id', $group_id);
 		$stmt -> execute();

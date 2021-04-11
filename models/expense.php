@@ -193,13 +193,35 @@
 	function devide_evenly($pdo, $last_expense, $user_id) {
 		$groups = get_groups($pdo, $user_id);
 		foreach ($groups as $group) {
+			// [グループID]=>[グループの人数]の連想配列を作成する
 			$members = array($group['group_id'] => $group['number_of_members']);
 			foreach ($members as $group_id => $member) {
 				if ($group_id === $last_expense['group_id']) {
+					// パラメータで渡された支出金額をグループ人数で割る
 					return $last_expense['amount'] / $member;
 				}
 			}
 		}
+	}
+
+	// 端数処理方法で分岐させ、端数を計算する
+	function round_numbers($rounding, $number) {
+		switch ($rounding) {
+			case '0':
+				$number = round($number);
+				break;
+			case '1':
+				$number = floor($number);
+				break;
+			case '2':
+				$number = ceil($number);
+				break;
+			
+			default:
+				var_dump($rounding);
+				break;
+		}
+		return $number;
 	}
 
 	// user_groupテーブルの繰越額を最新の金額にアップデートする
@@ -233,14 +255,20 @@
 		if ($total['group_total']) {
 			// グループのメンバー数を取得する
 			$groups = get_groups($pdo, $user_id);
-
-			// グループの合計金額を等分する
 			foreach ($groups as $group) {
 				if ($group['group_id'] == $group_id){
+					// グループの人数を把握する
 					$number = $group['number_of_members'];
+				
+					// グループの端数処理方法を変数として取得する
+					$rounding = $group['rounding'];
 				}
 			}
+			// グループの合計金額を等分する
 			$devided = $total['group_total'] / $number;
+
+			// 端数処理を行う
+			$rounded_devided = round_numbers($rounding, $devided); 
 
 			// メンバーのuser_idを取得する
 			$members = get_member_names($pdo, $group_id);
@@ -252,7 +280,7 @@
 				}
 
 				// 更新する繰越額を計算する
-				$updated_carryover = round($devided - $subtotal['subtotal']);
+				$updated_carryover = $rounded_devided - $subtotal['subtotal'];
 
 				// 最新の繰越額にアップデートする
 				update_carryover($pdo, $updated_carryover, $group_id, $member['user_id']);
@@ -272,23 +300,26 @@
 	function recalculate_carryover_after_user_dropped($pdo, $group_id, $remained_carryover) {
 		// 脱退したユーザーが所属していたグループの人数を取得する
 		$result = get_specific_group($pdo, $group_id);
-		// var_dump($result);
+
 		if ($result) {
-			// 脱退したユーザーの繰越額を等分する
+			// 端数処理方法を変数として保持しておく
+			$rounding = $result['rounding'];
+
 			if ($remained_carryover !== 0) {
+				// 脱退したユーザーの繰越額を等分する
 				$devided = $remained_carryover / $result['number_of_members'];
+
+				// 当分した金額を端数処理する
+				$rounded_devided = round_numbers($rounding, $devided);
 			} else {
-				$devided = 0;
+				$rounded_devided = 0;
 			}
-			// var_dump($devided);
 			
 			// 現在の残りのメンバーの繰越額を取得する
 			$members = get_carryover($pdo, $group_id);
-			// var_dump($members);
 			foreach ($members as $member) {
 				// 現在の繰越額に脱退したユーザーの繰越額を上乗せする
-				$updated_carryover = $member['carryover'] + $devided;
-				// var_dump($updated_carryover);
+				$updated_carryover = $member['carryover'] + $rounded_devided;
 
 				// 残ったメンバーの繰越額を更新する
 				update_carryover($pdo, $updated_carryover, $group_id, $member['user_id']);

@@ -4,6 +4,7 @@
 	require_once MODELS_PATH.'/user.php';
 	require_once MODELS_PATH.'/expense.php';
 	require_once MODELS_PATH.'/group.php';
+	require_once MODELS_PATH.'/notice.php';
 	
 	// セッション開始
 	session_start();
@@ -35,6 +36,15 @@
 			<h1><a href="index.html"><img src="../images/logo-sm.png" alt="ロゴ画像"></a></h1>
 			<nav>
 				<ul>
+<?php 
+	// お知らせがあるか確認する
+	$notices = get_notice($pdo, $_SESSION['user_id']);
+	if (!$notices):
+?>
+						<li class="notice-icon"><img src="../images/bell-brown.png" alt="お知らせ" id="notice"></li>
+<?php else: ?>
+						<li class="notice-icon"><img src="../images/notice-bell-brown.png" alt="お知らせ" id="notice"></li>
+<?php endif; ?>
 					<li class="mr-1"><a href="../views/account.php"><img src="../images/avatars/user_avatars/<?php echo $admin_user['user_avatar'] ?>" alt="管理者のアバター" class="avatar rounded-circle"></a></li>
 					<li class="mr-3"><a href="../views/account.php"><span><?php echo $admin_user['name'] ?></span>さん</a></li>
 					<li><a href="admin_logout.php">ログアウト</a></li>
@@ -42,6 +52,21 @@
 			</nav>
 		</header>
 		<main class="dashboard">
+			<!-- お知らせセクション -->
+			<div class="notice-container">
+				<ul class="notice-list">
+<?php foreach($notices as $notice): ?>
+					<li>
+						<form action="display_notice.php" method="POST">
+							<input type="hidden" name="title" value="<?php echo $notice['notice_id'] ?>">
+							<input type="submit" class="notice-title" value="<?php echo $notice['title'] ?>">
+						</form>
+					</li>
+					<li class="notice-date"><?php echo $notice['date'] ?></li>
+<?php endforeach; ?>
+				</ul>
+			</div>
+			<!-- メインセクション -->
 			<h1 class="mb-4">おごりあい管理画面</h1>
 			<section>
 				<ul class="tab-list">
@@ -108,13 +133,10 @@
 								<td><?php echo $value['date'] ?></td>
 							</tr>
 <?php endforeach; ?>
-						</table>
 <?php else: ?>
-		<p>
-			データが存在しません。<br>
-			もう一度検索してください。
-		</p>
+							<td colspan="8">データが存在しません。</td>
 <?php endif; ?>
+						</table>
 <?php endif; ?>
 					</div>
 
@@ -172,16 +194,18 @@
 <?php 
 	if ($_SERVER['REQUEST_METHOD'] === 'POST'):
 			// user_idがPOSTされている場合、user_idからユーザー情報を取得する
-			if ((isset($_POST['user_id']) && strlen($_POST['user_id'])) && !(isset($_POST['keyword']) && strlen($_POST['keyword']))):
+			if (isset($_POST['user_id']) && strlen($_POST['user_id'])):
 				$user_id = $_POST['user_id'];
 				$users = null;
 				$users[] = get_user_info($user_id, $pdo);
+				var_dump($users);
 			else:
 				// 名前もしくはメールアドレスからユーザー情報をあいまい検索する
-				if ((isset($_POST['keyword']) && strlen($_POST['keyword'])) && !(isset($_POST['user_id']) && strlen($_POST['user_id']))):
+				if (isset($_POST['keyword']) && strlen($_POST['keyword'])):
 					$keyword = $_POST['keyword'];
 					$users = null;
 					$users = get_user_info_with_keyword($pdo, $keyword); 
+					var_dump($users);
 				else:
 ?>
 	<p>IDもしくはキーワードの入力が必要です。</p>
@@ -444,7 +468,6 @@
 			</div>
 		</footer>
 	</div>
-
 	<script src="script.js"></script>
 </body>
 

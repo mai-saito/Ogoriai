@@ -776,6 +776,10 @@ footer div img {
 	padding-right: 5px;
 }
 
+.expense-table .notice-list {
+	display: block;
+}
+
 .expense-table ul {
 	display: flex;
 }
