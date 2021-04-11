@@ -70,7 +70,7 @@
 				<ul class="notice-list">
 <?php foreach($notices as $notice): ?>
 					<li>
-						<form action="display_notice.php" method="POST">
+						<form action="views/display_notice.php" method="POST">
 							<input type="hidden" name="title" value="<?php echo $notice['notice_id'] ?>">
 							<input type="submit" class="notice-title" value="<?php echo $notice['title'] ?>">
 						</form>
@@ -85,8 +85,9 @@
 					<img src="../images/avatars/group_avatars/<?php echo $group['group_avatar'] ?>" alt="グループアバター画像" class="rounded-circle">
 					<span><?php echo $group['group_name'] ?></span>を清算する</span>
 				</h1>
-				<form action="alert_settle_up.php" method="POST" class="settle-up-btn">
+				<form action="../alert_settle_up.php" method="POST" class="settle-up-btn">
 					<input type="hidden" name="group_id" value="<?php echo $group_id ?>">
+					<input type="hidden" name="group_name" value="<?php echo $group['group_name'] ?>">
 					<input type="submit" value="グループのメンバーに清算のお知らせをする" class="btn btn-lg btn-block btn-primary">
 					<span class="balloon">このボタンを押すとグループメンバーに清算のお願いがお知らせされます。</span>
 				</form>
