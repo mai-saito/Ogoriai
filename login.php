@@ -5,7 +5,7 @@
 	require_once MODELS_PATH.'/user.php';
 
 	// DB接続情報
-	$pdo = connect_db(DSN, LOCAL_ID , LOCAL_PASSWORD);
+	$pdo = connect_db(DSN, LOCAL_ID, LOCAL_PASSWORD);
 
 	// 入力エラー配列
 	$errors = array();

@@ -31,6 +31,12 @@ function handleTabs() {
 			// クッキーから取得したタブが存在しない場合は、最初のタブをアクティブにする
 			tabButtons[0].classList.add('is-active');
 			tabContents[0].classList.add('is-active');
+
+			// モーダルとの衝突回避
+			if (tabButtons == true && tabContents == true) {
+				tabButtons[0].classList.add('is-active');
+				tabContents[0].classList.add('is-active');
+			}
 		}
 	} 
 
