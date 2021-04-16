@@ -56,7 +56,7 @@
 			notify_errors($errors);
 		} else {
 			$pdo = null;
-			header("Location: http://".$_SERVER['HTTP_HOST']."/ogoriai/admin/dashboard.php");	
+			header("Location: http://".$_SERVER['HTTP_HOST']."/ogoriai/admin/views/dashboard.php");	
 		}
 	} else {
 		$pdo = null;

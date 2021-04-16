@@ -77,15 +77,15 @@
 		<main class="delete-user">
 			<p>ユーザーID：<?php echo $_POST['user_id']?></p>
 			<p class="mb-3">ユーザー名：<?php echo $_POST['name'] ?> を削除しました。</p>
-			<p><a href="dashboard.php" class="btn btn-lg btn-primary">管理者画面へ戻る</a></p>
+			<p><a href="views/dashboard.php" class="btn btn-lg btn-primary">管理者画面へ戻る</a></p>
 		</main>
 		<footer>
 			<div>
 				<small>© 2021 Mai Saito.</small>
 			</div>
 			<div>
-				<p><a href="views/faq.html" class="btn btn-lg btn-contact mr-3">よくあるご質問</a></p>
-				<p><a href="views/contact.php"  class="btn btn-lg btn-contact mr-3">お問合せ</a></p>
+				<p><a href="views/admin_faq.html" class="btn btn-lg btn-contact mr-3">よくあるご質問</a></p>
+				<p><a href="../views/contact.php"  class="btn btn-lg btn-contact mr-3">お問合せ</a></p>
 				<p><a href="#wrapper"><img src="../images/page-top-nude.png" alt="ページトップへ移動"></a></p>
 			</div>
 		</footer>

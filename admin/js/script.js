@@ -48,7 +48,7 @@ function handleTabs() {
 			if(tabContent !== null) {
 					tabContent.classList.add('is-active');
 			}
-		});				
+		});			
 	}
 }
 

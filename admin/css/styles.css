@@ -114,6 +114,69 @@ li {
 	border: 2px solid rgba(0, 145, 124, 0.5);
 }
 
+/*** Notice ***/
+.notice-container {
+	display: none;
+	position: absolute;
+	top: 80px;
+	left: calc(100vw - 430px);
+	z-index: 999;
+}
+
+.notice-container:before {
+	border-right: 10px solid transparent;
+  border-bottom: 10px solid rgb(223, 224, 223);
+  border-left: 10px solid transparent;  
+  width: 0;
+  height: 0;
+	display: block;
+  position: absolute;
+  top: -10px;
+  content: '';         
+}
+
+.notice-container .notice-list {
+	width: calc(100vw / 6);
+	padding: 5px;
+	background-color: rgb(255, 255, 255);
+	border: 2px solid rgb(223, 224, 223);
+}
+
+.notice-container .notice-list .notice-title {
+	outline: none;
+	border: none;
+	background-color: inherit;
+}
+
+.notice-container .notice-list .notice-date {
+	text-align: right;
+	border-bottom: 2px dotted rgb(223, 224, 223);
+}
+
+.notice-container .notice-list .notice-date:last-of-type {
+	border-bottom: none;
+}
+
+.notice {
+	width: 90%;
+	margin: 0 auto;
+	display: block;
+}
+
+.notice .notice-name {
+	color: rgb(0, 145, 124);
+	font-size: 2rem;
+	text-align: right;
+}
+
+.notice .notice-date {
+	text-align: right;
+}
+
+.notice .notice-content {
+	border: 2px solid rgb(223, 224, 223)
+}
+
 /*** Header ***/
 header {
 	width: 100%;
@@ -138,6 +201,11 @@ header ul {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+}
+
+header ul li #notice:hover,
+header ul li #no-notice:hover {
+	cursor: pointer;
 }
 
 header ul li:first-of-type {
@@ -326,10 +394,59 @@ footer div img {
 	border: 1px solid rgb(223, 224, 223);
 }
 
-/*** Delete-group & Delete-user ***/
+.dashboard .tab-content .insert-alert {
+	font-size: 1.2rem;
+	color: rgb(143, 0, 21);
+}
+
+/*** Add-admin & Delete-group & Delete-user ***/
+.add-admin,
 .delete-group,
 .delete-user {
 	width: 90%;
 	margin: 0 auto;
 	display: block;
+}
+
+/*** FAQ ***/
+.faq {
+	width: 90%;
+	margin: 0 auto;
+	color: rgb(67, 53, 32);
+}
+
+.faq h1{
+	width: 70%;
+	font-size: 2rem;
+	margin-bottom: 10px;
+}
+
+.faq div{
+	width: 100%;
+	border: 2px solid rgb(223, 224, 223);
+	border-collapse: separate;
+}
+
+.faq .q-icon {
+	width: 30px;
+	height: 30px;
+	margin-right: 5px;
+	text-align: center;
+	color: rgb(255, 255, 255);
+	background-color: rgba(145, 0, 21, 0.7);
+	border-radius: 50%;
+}
+
+.faq .a-icon {
+	width: 30px;
+	height: 30px;
+	margin-right: 5px;
+	text-align: center;
+	color: rgb(255, 255, 255);
+	background-color: rgba(0, 145, 124, 0.7);
+	border-radius: 50%;
+}
+
+.faq .a-row {
+	vertical-align: top;
 }

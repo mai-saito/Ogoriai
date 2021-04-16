@@ -40,7 +40,7 @@
 		$stmt = null;
 		// usersテーブルにおいて名前かメールアドレスの一部であいまい検索を実行する
 		$group_name = '%'.$group_name.'%';
-		$sql = 'SELECT u.user_id, u.name, u.email u_g.group_leader, g.group_id, g.group_name FROM users AS u INNER JOIN user_group AS u_g ON u_g.user_id = u.user_id INNER JOIN groups AS g ON g.group_id = u_g.group_id WHERE group_name LIKE :group_name';
+		$sql = 'SELECT u.user_id, u.name, u.email, u_g.group_leader, g.group_id, g.group_name FROM users AS u INNER JOIN user_group AS u_g ON u_g.user_id = u.user_id INNER JOIN groups AS g ON g.group_id = u_g.group_id WHERE group_name LIKE :group_name';
 		$stmt = $pdo -> prepare($sql);
 		$stmt -> bindParam(':group_name', $group_name);
 		$stmt -> execute();

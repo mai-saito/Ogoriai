@@ -22,6 +22,16 @@ function check_session($name) {
 	}
 }
 
+// セッションが切れている場合の処理を行う
+function check_admin_session($name) {
+	session_regenerate_id(true);
+	if (!isset($_SESSION[$name])) {
+		echo 'セッションが切れています。<br>再度ログインをお願いいたします。';
+		echo '<p><a href=http://'.$_SERVER['HTTP_HOST'].'/ogoriai/admin/index.html>戻る</a></p>';
+		exit();
+	}
+}
+
 // セッションを任意の値にセットする
 function set_session($name, $value) {
 	$_SESSION[$name] = $value;
@@ -66,5 +76,6 @@ define('ROOT_PATH', get_paths([MODELS_PATH, '../']));
 define('VIEWS_PATH', get_paths([MODELS_PATH, '..', 'views']));
 define('CONFIG_PATH', get_paths([MODELS_PATH, '..', 'config']));
 define('IMAGES_PATH', get_paths([MODELS_PATH, '..', 'images']));
+define('ADMIN_PATH', get_paths([MODELS_PATH, '..', 'admin']));
 
 ?>

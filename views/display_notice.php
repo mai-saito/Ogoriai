@@ -18,8 +18,8 @@
 		endif;	
 
 		// お知らせの内容を取得する
-		$notice = get_notice_details($pdo, $notice_id, $_SESSION['user_id']);
-		if ($notice):
+		$current_notice = get_notice_details($pdo, $notice_id, $_SESSION['user_id']);
+		if ($current_notice):
 			// 読んだお知らせを既読にする
 			update_read_status($pdo, $notice_id, $_SESSION['user_id']); 
 ?>
@@ -73,11 +73,11 @@
 					</ul>
 				</div>
 				<!-- メインセクション -->
-				<h1><?php echo $notice['title'] ?></h1>
+				<h1><?php echo $current_notice['title'] ?></h1>
 				<div class="content-container">
-					<p class="notice-name m-0 pr-1"><?php echo $notice['name'] ?></p>
-					<p class="notice-date pr-1"><?php echo $notice['date'] ?></p>
-					<p class="notice-content p-3"><?php echo $notice['content'] ?></p>
+					<p class="notice-name m-0 pr-1"><?php echo $current_notice['name'] ?></p>
+					<p class="notice-date pr-1"><?php echo $current_notice['date'] ?></p>
+					<p class="notice-content p-3"><?php echo $current_notice['content'] ?></p>
 				</div>
 			</main>
 			<footer>
@@ -91,7 +91,7 @@
 				</div>
 			</footer>
 		</div>
-		<script src="../script.js"></script>
+		<script src="../js/script.js"></script>
 	</body>
 </html>	
 <?php 
